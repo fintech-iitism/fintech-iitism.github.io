@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-pixel: 'Pixelify Sans', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-ink: #191919;
+  --color-brand: #5fb87a;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-ink);
+  }
+}

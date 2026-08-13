@@ -9,6 +9,13 @@
 }
 
 @layer base {
+  /* Declares the dark canvas, so the browser does not treat this as a light
+     page: without it the backdrop-filter on the navbar samples a white base
+     canvas and forced-dark re-themes the bar to a blue grey. */
+  :root {
+    color-scheme: dark;
+  }
+
   body {
     background-color: var(--color-ink);
   }

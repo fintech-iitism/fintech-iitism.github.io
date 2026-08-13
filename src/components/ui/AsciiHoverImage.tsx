@@ -1,17 +1,23 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type PointerEvent } from 'react'
 
 interface AsciiHoverImageProps {
   src: string
   alt?: string
   /** Monospace glyph size in CSS pixels. Smaller keeps more of the shape. */
   cellSize?: number
-  /** Seconds the glyphs take to resolve in or out. */
-  duration?: number
-  /** Share of settled glyphs swapped for a new character each second. */
+  /** Radius of the photo spotlight under the cursor, in CSS pixels. */
+  revealRadius?: number
+  /** Share of glyphs swapped for a new character each second. */
   flicker?: number
   /** Brightness multiplier on the sampled colors. Glyph ink covers roughly a
-   *  third of its cell, so 1 reads much darker than the photo it replaces. */
+   *  third of its cell, so 1 reads much darker than the photo. */
   gain?: number
+  /** Seconds the ASCII takes to assemble on load. */
+  duration?: number
+  /** Seconds to wait before the ASCII assembles. */
+  introDelay?: number
+  /** Edge the load sweep starts from. */
+  introFrom?: 'left' | 'right' | 'top' | 'bottom'
   /** Must include a positioning class (`absolute` or `relative`): the canvas
    *  is positioned against this wrapper. */
   className?: string
@@ -32,19 +38,35 @@ const RAMP = [' ', '.,:', ";~-'", '=+<>|!', 'vxnjzsc1', 'VXNJZ48', 'MW0@#$%&']
 
 const pick = (set: string): string => set[(Math.random() * set.length) | 0]!
 
+// A cell fades over WINDOW of the load run; delays spread across SPREAD.
+const WINDOW = 0.18
+const SPREAD = 0.82
+// Share of a cell's delay from its position rather than chance. Lower values
+// dissolve, higher values wipe.
+const DIRECTED = 0.55
+// Seconds for the spotlight to open or close.
+const FADE = 0.25
+// Frames per second while idle, when only the character flicker is moving.
+const IDLE_FPS = 12
+
+const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v)
+
 export function AsciiHoverImage({
   src,
   alt = '',
   cellSize = 10,
-  duration = 1.2,
+  revealRadius = 90,
   flicker = 1.5,
   gain = 2.4,
+  duration = 1.2,
+  introDelay = 0.4,
+  introFrom = 'top',
   className = '',
 }: AsciiHoverImageProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const apiRef = useRef<{ to: (target: number, px: number, py: number) => void } | null>(
+  const apiRef = useRef<{ move: (x: number, y: number) => void; show: (on: boolean) => void } | null>(
     null,
   )
 
@@ -58,72 +80,96 @@ export function AsciiHoverImage({
 
     const cw = cellSize * 0.6
     const ch = cellSize
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // Offscreen plate holds the photo clipped to the spotlight.
+    const plate = document.createElement('canvas')
+    const pctx = plate.getContext('2d')
+
     let image: HTMLImageElement | null = null
     let cells: Cell[] = []
-    let progress = 0
-    let target = 0
+    let assembled = still ? 1 : 0 // load progress of the ASCII
+    let reveal = 0 // spotlight strength
+    let revealTarget = 0
+    let cursorX = 0
+    let cursorY = 0
     let frame = 0
     let lastT = 0
-    let originX = 0
-    let originY = 0
-    let reach = 1
+    let painted = 0
+    let holdUntil = 0
+    // The loop starts after an async decode, which can land after cleanup has
+    // already run. Without this the orphaned loop keeps ticking and its swaps
+    // stack on top of the live one.
+    let dead = false
 
-    const draw = (p: number) => {
-      ctx.clearRect(0, 0, wrap.clientWidth, wrap.clientHeight)
+    const draw = () => {
+      const w = wrap.clientWidth
+      const h = wrap.clientHeight
+      ctx.clearRect(0, 0, w, h)
       // 500 weight lays down more ink per cell, closer in mass to the photo.
       ctx.font = `500 ${cellSize}px "JetBrains Mono", monospace`
       ctx.textBaseline = 'top'
 
       for (const cell of cells) {
-        // Each glyph owns a window inside the transition, so the field resolves
-        // in a scatter rather than all at once.
-        const local = Math.min(1, Math.max(0, (p - cell.delay * 0.5) / 0.5))
+        const local = clamp01((assembled - cell.delay) / WINDOW)
         if (local <= 0) continue
-
         ctx.globalAlpha = local * cell.alpha
         ctx.fillStyle = cell.color
         ctx.fillText(cell.ch, cell.x, cell.y)
       }
-
       ctx.globalAlpha = 1
 
-      // Erase the photo behind the glyph front, never ahead of it. A cell at
-      // distance ratio u starts at p = 0.425u and finishes at 0.425u + 0.5;
-      // these radii clear that same spot slightly later, so the two layers
-      // overlap instead of leaving a dark gap in the transition band.
-      const inner = Math.min(1, Math.max(0, (p - 0.55) / 0.45)) * reach * 1.02
-      const outer = Math.min(1, Math.max(0, p / 0.45)) * reach * 1.02
-      const mask = `radial-gradient(circle at ${originX}px ${originY}px, transparent ${inner}px, black ${outer}px)`
-      imgEl.style.maskImage = mask
-      imgEl.style.webkitMaskImage = mask
+      if (reveal <= 0.001 || !image || !pctx) return
+
+      // Photo clipped to a soft circle, then laid over the glyphs. Drawing it
+      // opaque means no half-and-half blend can darken the edge.
+      const r = revealRadius * (0.65 + 0.35 * reveal)
+      pctx.clearRect(0, 0, w, h)
+      pctx.drawImage(image, 0, 0, w, h)
+      pctx.globalCompositeOperation = 'destination-in'
+      const fade = pctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, r)
+      fade.addColorStop(0, `rgba(0,0,0,${reveal})`)
+      fade.addColorStop(0.6, `rgba(0,0,0,${reveal * 0.92})`)
+      fade.addColorStop(1, 'rgba(0,0,0,0)')
+      pctx.fillStyle = fade
+      pctx.fillRect(0, 0, w, h)
+      pctx.globalCompositeOperation = 'source-over'
+
+      ctx.drawImage(plate, 0, 0, w, h)
     }
 
     const tick = (t: number) => {
       const dt = Math.min(0.05, (t - lastT) / 1000)
       lastT = t
 
-      const step = dt / Math.max(0.05, duration)
-      progress =
-        target > progress
-          ? Math.min(target, progress + step)
-          : Math.max(target, progress - step)
+      if (t >= holdUntil && assembled < 1) {
+        assembled = Math.min(1, assembled + dt / Math.max(0.05, duration))
+      }
+
+      const fadeStep = dt / FADE
+      reveal =
+        revealTarget > reveal
+          ? Math.min(revealTarget, reveal + fadeStep)
+          : Math.max(revealTarget, reveal - fadeStep)
 
       for (const cell of cells) {
-        const local = Math.min(1, Math.max(0, (progress - cell.delay * 0.5) / 0.5))
-        // Mid-resolve cells churn every frame, then lock to their character.
+        const local = (assembled - cell.delay) / WINDOW
+        // Cells churn as they land, then settle into their character.
         if (local > 0 && local < 1) cell.ch = pick(cell.set)
       }
 
-      // Settled glyphs keep swapping, so the artwork never freezes while hovered.
-      const swaps = Math.round(cells.length * flicker * dt * progress)
+      const swaps = Math.round(cells.length * flicker * dt * assembled)
       for (let n = 0; n < swaps; n++) {
         const cell = cells[(Math.random() * cells.length) | 0]!
         cell.ch = pick(cell.set)
       }
 
-      draw(progress)
-      // Keep running while hovered to sustain the flicker.
-      frame = progress === target && target === 0 ? 0 : requestAnimationFrame(tick)
+      // Full rate while anything is animating, throttled when only flickering.
+      const busy = assembled < 1 || reveal !== revealTarget || revealTarget > 0
+      if (busy || t - painted > 1000 / IDLE_FPS) {
+        painted = t
+        draw()
+      }
+      frame = requestAnimationFrame(tick)
     }
 
     const build = () => {
@@ -132,9 +178,12 @@ export function AsciiHoverImage({
       if (!image || w === 0 || h === 0) return
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      canvas.width = w * dpr
-      canvas.height = h * dpr
+      for (const c of [canvas, plate]) {
+        c.width = w * dpr
+        c.height = h * dpr
+      }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      pctx?.setTransform(dpr, 0, 0, dpr, 0, 0)
 
       const cols = Math.ceil(w / cw)
       const rows = Math.ceil(h / ch)
@@ -147,6 +196,13 @@ export function AsciiHoverImage({
       if (!ictx) return
       ictx.drawImage(image, 0, 0, cols, rows)
       const { data } = ictx.getImageData(0, 0, cols, rows)
+
+      // Nearest edge to the load origin, and the sweep runs away from it.
+      const ax = introFrom === 'left' ? 1 : introFrom === 'right' ? -1 : 0
+      const ay = introFrom === 'top' ? 1 : introFrom === 'bottom' ? -1 : 0
+      const span = Math.abs(w * ax) + Math.abs(h * ay) || 1
+      const ox = ax >= 0 ? 0 : w
+      const oy = ay >= 0 ? 0 : h
 
       cells = []
       for (let i = 0; i < cols * rows; i++) {
@@ -161,52 +217,37 @@ export function AsciiHoverImage({
         // Scale all three channels by one factor, capped so none clips. Per
         // channel clamping would brighten unevenly and shift the hue.
         const k = Math.min(gain, 255 / (Math.max(sr, sg, sb) || 1))
-        const r = sr * k
-        const g = sg * k
-        const b = sb * k
         const lum = (sr * 0.299 + sg * 0.587 + sb * 0.114) / 255
         const set = RAMP[Math.min(RAMP.length - 1, (lum * 1.35 * RAMP.length) | 0)]!
         if (set === ' ') continue
 
+        const x = (i % cols) * cw
+        const y = ((i / cols) | 0) * ch
+        const t = ((x - ox) * ax + (y - oy) * ay) / span
         cells.push({
           ch: pick(set),
           set,
-          x: (i % cols) * cw,
-          y: ((i / cols) | 0) * ch,
-          // Replaced on hover by the distance from the pointer.
-          delay: Math.random(),
+          x,
+          y,
+          // Direction sets the trend, randomness hides the edge.
+          delay: SPREAD * clamp01(DIRECTED * clamp01(t) + (1 - DIRECTED) * Math.random()),
           alpha,
-          color: `rgb(${r | 0} ${g | 0} ${b | 0})`,
+          color: `rgb(${(sr * k) | 0} ${(sg * k) | 0} ${(sb * k) | 0})`,
         })
       }
 
-      draw(progress)
-    }
-
-    /** Order the cells by distance from the pointer, so the effect spreads out
-     *  from where the cursor touched the artwork. */
-    const stagger = (px: number, py: number) => {
-      const w = wrap.clientWidth
-      const h = wrap.clientHeight
-      originX = px
-      originY = py
-      // Farthest reachable corner from this point sets the normalising range.
-      reach = Math.hypot(Math.max(px, w - px), Math.max(py, h - py)) || 1
-
-      for (const cell of cells) {
-        const d = Math.hypot(cell.x - px, cell.y - py) / reach
-        cell.delay = Math.min(0.85, d * 0.85 + Math.random() * 0.15)
-      }
+      // The canvas paints everything now; the element only holds the box open.
+      imgEl.style.visibility = 'hidden'
+      draw()
     }
 
     apiRef.current = {
-      to: (next: number, px: number, py: number) => {
-        target = next
-        stagger(px, py)
-        if (frame === 0) {
-          lastT = performance.now()
-          frame = requestAnimationFrame(tick)
-        }
+      move: (x, y) => {
+        cursorX = x
+        cursorY = y
+      },
+      show: (on) => {
+        revealTarget = on ? 1 : 0
       },
     }
 
@@ -214,8 +255,12 @@ export function AsciiHoverImage({
     img.src = src
     img.decode().then(
       () => {
+        if (dead) return
         image = img
         build()
+        holdUntil = performance.now() + introDelay * 1000
+        lastT = performance.now()
+        frame = requestAnimationFrame(tick)
       },
       () => undefined,
     )
@@ -224,23 +269,27 @@ export function AsciiHoverImage({
     observer.observe(wrap)
 
     return () => {
+      dead = true
       cancelAnimationFrame(frame)
       observer.disconnect()
     }
-  }, [src, cellSize, duration, flicker, gain])
+  }, [src, cellSize, revealRadius, flicker, gain, duration, introDelay, introFrom])
+
+  const track = (e: PointerEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    apiRef.current?.move(e.clientX - rect.left, e.clientY - rect.top)
+  }
 
   return (
     <div
       ref={wrapRef}
       className={`pointer-events-auto ${className}`}
       onPointerEnter={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        apiRef.current?.to(1, e.clientX - rect.left, e.clientY - rect.top)
+        track(e)
+        apiRef.current?.show(true)
       }}
-      onPointerLeave={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        apiRef.current?.to(0, e.clientX - rect.left, e.clientY - rect.top)
-      }}
+      onPointerMove={track}
+      onPointerLeave={() => apiRef.current?.show(false)}
     >
       <img ref={imgRef} src={src} alt={alt} className="block w-full" />
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full" />

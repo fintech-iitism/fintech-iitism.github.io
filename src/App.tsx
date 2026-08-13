@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { RootLayout } from './components/layout/RootLayout'
+import { About } from './pages/About'
 import { Home } from './pages/Home'
 import { PagePlaceholder } from './pages/PagePlaceholder'
 
@@ -9,7 +10,8 @@ function App() {
       <Routes>
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
-          <Route path="about" element={<PagePlaceholder title="About Us" />} />
+          <Route path="about" element={<About />} />
+          <Route path="members" element={<PagePlaceholder title="Members" />} />
           <Route path="blog" element={<PagePlaceholder title="Blog" />} />
           <Route
             path="resources"

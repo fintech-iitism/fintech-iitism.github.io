@@ -11,12 +11,15 @@ export function Hands() {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 z-20 hidden overflow-hidden md:block"
     >
+      {/* Each hand resolves outward from the middle of the screen. */}
       <AsciiHoverImage
         src="/hand-left.png"
+        introFrom="right"
         className="absolute top-[58%] left-0 w-[clamp(180px,26vw,480px)] -translate-y-1/2"
       />
       <AsciiHoverImage
         src="/hand-right.png"
+        introFrom="left"
         className="absolute top-[42%] right-0 w-[clamp(170px,25vw,460px)] -translate-y-1/2"
       />
     </div>

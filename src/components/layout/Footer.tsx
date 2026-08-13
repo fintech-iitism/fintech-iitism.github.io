@@ -29,7 +29,7 @@ const socialLinks: ExternalLink[] = [
 export function Footer() {
   return (
     <footer className="relative z-10 w-full border-t border-white/10 px-6 py-12 md:px-10">
-      <div className="mx-auto flex max-w-5xl flex-col gap-10 md:flex-row md:justify-between">
+      <div className="flex flex-col gap-10 md:flex-row md:justify-between">
         <div className="max-w-xs">
           <img
             src="/logo-mark.png"
@@ -43,7 +43,7 @@ export function Footer() {
 
         <nav className="flex gap-12 md:gap-20">
           <div>
-            <h2 className="font-display text-sm text-white">Site</h2>
+            <h2 className="font-pixel text-sm text-white">Site</h2>
             <ul className="mt-4 flex flex-col gap-2 font-mono text-xs text-white/60">
               {siteLinks.map((link) => (
                 <li key={link.to}>
@@ -59,7 +59,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="font-display text-sm text-white">Elsewhere</h2>
+            <h2 className="font-pixel text-sm text-white">Elsewhere</h2>
             <ul className="mt-4 flex flex-col gap-2 font-mono text-xs text-white/60">
               {socialLinks.map((link) => (
                 <li key={link.label}>
@@ -78,7 +78,7 @@ export function Footer() {
         </nav>
       </div>
 
-      <div className="mx-auto mt-10 flex max-w-5xl flex-col gap-2 border-t border-white/5 pt-6 font-mono text-[0.7rem] text-white/40 sm:flex-row sm:justify-between">
+      <div className="mt-10 flex flex-col gap-2 border-t border-white/5 pt-6 font-mono text-[0.7rem] text-white/40 sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} Fintech Club, IIT (ISM) Dhanbad.</p>
         <p>Built by the club, in Dhanbad.</p>
       </div>

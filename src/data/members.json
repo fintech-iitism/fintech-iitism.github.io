@@ -1,0 +1,37 @@
+[
+  {
+    "name": "A. Sharma",
+    "designation": "President",
+    "photo": "/members/rj.png"
+  },
+  {
+    "name": "B. Verma",
+    "designation": "Vice President",
+    "photo": "drive:1KCvIhR8yE3Ty2I0ZnTnTr7fsil5PCXU2"
+  },
+  {
+    "name": "C. Nair",
+    "designation": "Head, Finance",
+    "photo": "drive:12tAuPkN-c-kJBiEQKqPWhdX3IBX2PP82"
+  },
+  {
+    "name": "D. Iyer",
+    "designation": "Head, Quant"
+  },
+  {
+    "name": "E. Khan",
+    "designation": "Head, Design"
+  },
+  {
+    "name": "F. Das",
+    "designation": "Head, Outreach"
+  },
+  {
+    "name": "G. Rao",
+    "designation": "Treasurer"
+  },
+  {
+    "name": "H. Singh",
+    "designation": "Secretary"
+  }
+]

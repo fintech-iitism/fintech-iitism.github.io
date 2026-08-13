@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router'
+import { useEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router'
 
 interface NavItem {
   label: string
@@ -12,18 +13,37 @@ const items: NavItem[] = [
   { label: 'Events', to: '/events' },
 ]
 
+const linkClass = ({ isActive }: { isActive: boolean }): string =>
+  `transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
+    isActive ? 'text-brand' : ''
+  }`
+
 export function Navbar() {
+  const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  // Route changes and Escape both close the sheet.
+  useEffect(() => setOpen(false), [pathname])
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+
   return (
-    <header className="sticky top-0 z-30 w-full px-6 py-4 md:px-10">
-      {/* Blur lives on its own layer, twice the header's height: opaque for the
-          full header so the logo and links sit on frosted glass, then fading
-          across the band below it so there is no visible bottom edge. */}
+    <header className="sticky top-0 z-30 w-full px-5 py-4 sm:px-6 md:px-10">
+      {/* Frosted plate the exact size of the header, so the bar reads as one
+          translucent rectangle with a defined bottom edge. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[200%] bg-ink/15 backdrop-blur-xl [mask-image:linear-gradient(to_bottom,#000_0,#000_50%,transparent_100%)]"
+        className="pointer-events-none absolute inset-0 -z-10 border-b border-white/10 bg-ink/25 backdrop-blur-xl"
       />
 
-      <nav className="flex flex-col items-center gap-6 md:flex-row md:justify-between md:gap-10">
+      <nav className="flex items-center justify-between gap-4 md:gap-10">
         <NavLink to="/" className="shrink-0">
           <img
             src="/logo-mark.png"
@@ -32,23 +52,65 @@ export function Navbar() {
           />
         </NavLink>
 
-        <ul className="flex flex-wrap items-center justify-center gap-5 font-mono text-xs text-white sm:text-sm md:gap-10 md:text-base lg:gap-16">
+        <ul className="hidden items-center font-mono text-white md:flex md:gap-10 md:text-base lg:gap-16">
           {items.map((item) => (
             <li key={item.to}>
-              <NavLink
-                to={item.to}
-                className={({ isActive }) =>
-                  `transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
-                    isActive ? 'text-brand' : ''
-                  }`
-                }
-              >
+              <NavLink to={item.to} className={linkClass}>
                 {item.label}
               </NavLink>
             </li>
           ))}
         </ul>
+
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          onClick={() => setOpen(!open)}
+          className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand md:hidden"
+        >
+          {/* Square bars, no rounding, to sit with the pixel type. */}
+          <span
+            className={`block h-[2px] w-6 bg-current transition-transform ${
+              open ? 'translate-y-[7px] rotate-45' : ''
+            }`}
+          />
+          <span
+            className={`block h-[2px] w-6 bg-current transition-opacity ${
+              open ? 'opacity-0' : ''
+            }`}
+          />
+          <span
+            className={`block h-[2px] w-6 bg-current transition-transform ${
+              open ? '-translate-y-[7px] -rotate-45' : ''
+            }`}
+          />
+        </button>
       </nav>
+
+      <ul
+        id="mobile-nav"
+        className={`grid overflow-hidden font-mono text-sm text-white transition-[grid-template-rows,opacity] duration-300 md:hidden ${
+          open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+        }`}
+      >
+        <li className="min-h-0">
+          <ul className="mt-4 flex flex-col gap-4 border-t border-white/10 pt-4">
+            {items.map((item) => (
+              <li key={item.to}>
+                <NavLink
+                  to={item.to}
+                  tabIndex={open ? 0 : -1}
+                  className={linkClass}
+                >
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </li>
+      </ul>
     </header>
   )
 }

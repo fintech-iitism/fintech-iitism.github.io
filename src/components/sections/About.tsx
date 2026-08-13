@@ -8,16 +8,12 @@ interface Pillar {
 
 const pillars: Pillar[] = [
   {
-    title: 'Markets',
+    title: 'Finance',
     body: 'Equity research, trading strategy and macro discussions, run as weekly sessions open to every branch.',
   },
   {
     title: 'Quant',
     body: 'Statistics, backtesting and data driven modelling, from first principles up to competition grade work.',
-  },
-  {
-    title: 'Blockchain',
-    body: 'Protocols, smart contracts and the engineering behind decentralised finance, built hands on.',
   },
 ]
 
@@ -44,15 +40,15 @@ export function About() {
           No prior background is assumed. Curiosity is the only prerequisite.
         </p>
 
-        <ul className="mt-12 grid w-full gap-4 text-left md:grid-cols-3">
+        {/* No framed cards here: the two divisions read as plain columns, so
+            the only boxes on the site stay the member portraits. */}
+        <ul className="mt-14 grid w-full max-w-3xl gap-10 text-center md:grid-cols-2 md:gap-16">
           {pillars.map((pillar) => (
-            <li
-              key={pillar.title}
-              className="border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-brand/40"
-            >
+            <li key={pillar.title}>
               <h3 className="font-pixel text-base text-brand md:text-lg">
                 {pillar.title}
               </h3>
+              <PixelRule length={7} className="mt-2 text-sm text-white/40" />
               <p className="mt-3 font-mono text-xs leading-relaxed text-white/70">
                 {pillar.body}
               </p>
@@ -62,7 +58,7 @@ export function About() {
 
         <Link
           to="/members"
-          className="mt-12 border border-brand/60 px-5 py-2 font-mono text-xs text-brand transition-colors hover:bg-brand hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:text-sm"
+          className="mt-14 font-mono text-xs text-brand underline-offset-8 transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:text-sm"
         >
           Meet the members →
         </Link>

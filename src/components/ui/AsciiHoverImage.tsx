@@ -18,6 +18,9 @@ interface AsciiHoverImageProps {
   introDelay?: number
   /** Edge the load sweep starts from. */
   introFrom?: 'left' | 'right' | 'top' | 'bottom'
+  /** Reveal the whole photo on hover instead of a spotlight under the cursor.
+   *  `revealRadius` is unused in this mode. */
+  fullReveal?: boolean
   /** Must include a positioning class (`absolute` or `relative`): the canvas
    *  is positioned against this wrapper. */
   className?: string
@@ -61,6 +64,7 @@ export function AsciiHoverImage({
   duration = 1.2,
   introDelay = 0.4,
   introFrom = 'top',
+  fullReveal = false,
   className = '',
 }: AsciiHoverImageProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -86,6 +90,9 @@ export function AsciiHoverImage({
     const pctx = plate.getContext('2d')
 
     let image: HTMLImageElement | null = null
+    // Source rect that fills the box without distorting it, `object-cover`
+    // style, so photos of any aspect ratio can be dropped in unprepared.
+    let crop = { x: 0, y: 0, w: 0, h: 0 }
     let cells: Cell[] = []
     let assembled = still ? 1 : 0 // load progress of the ASCII
     let reveal = 0 // spotlight strength
@@ -118,13 +125,23 @@ export function AsciiHoverImage({
       }
       ctx.globalAlpha = 1
 
-      if (reveal <= 0.001 || !image || !pctx) return
+      if (reveal <= 0.001 || !image) return
+
+      // Whole photo cross-fading in over the glyphs, no cursor involved.
+      if (fullReveal) {
+        ctx.globalAlpha = reveal
+        ctx.drawImage(image, crop.x, crop.y, crop.w, crop.h, 0, 0, w, h)
+        ctx.globalAlpha = 1
+        return
+      }
+
+      if (!pctx) return
 
       // Photo clipped to a soft circle, then laid over the glyphs. Drawing it
       // opaque means no half-and-half blend can darken the edge.
       const r = revealRadius * (0.65 + 0.35 * reveal)
       pctx.clearRect(0, 0, w, h)
-      pctx.drawImage(image, 0, 0, w, h)
+      pctx.drawImage(image, crop.x, crop.y, crop.w, crop.h, 0, 0, w, h)
       pctx.globalCompositeOperation = 'destination-in'
       const fade = pctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, r)
       fade.addColorStop(0, `rgba(0,0,0,${reveal})`)
@@ -188,13 +205,21 @@ export function AsciiHoverImage({
       const cols = Math.ceil(w / cw)
       const rows = Math.ceil(h / ch)
 
+      const scale = Math.max(w / image.naturalWidth, h / image.naturalHeight)
+      crop = {
+        w: w / scale,
+        h: h / scale,
+        x: (image.naturalWidth - w / scale) / 2,
+        y: (image.naturalHeight - h / scale) / 2,
+      }
+
       // Downsample the artwork to one pixel per character cell.
       const off = document.createElement('canvas')
       off.width = cols
       off.height = rows
       const ictx = off.getContext('2d', { willReadFrequently: true })
       if (!ictx) return
-      ictx.drawImage(image, 0, 0, cols, rows)
+      ictx.drawImage(image, crop.x, crop.y, crop.w, crop.h, 0, 0, cols, rows)
       const { data } = ictx.getImageData(0, 0, cols, rows)
 
       // Nearest edge to the load origin, and the sweep runs away from it.
@@ -273,7 +298,17 @@ export function AsciiHoverImage({
       cancelAnimationFrame(frame)
       observer.disconnect()
     }
-  }, [src, cellSize, revealRadius, flicker, gain, duration, introDelay, introFrom])
+  }, [
+    src,
+    cellSize,
+    revealRadius,
+    flicker,
+    gain,
+    duration,
+    introDelay,
+    introFrom,
+    fullReveal,
+  ])
 
   const track = (e: PointerEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()

@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
     "typecheck": "tsc -b --noEmit",
+    "photos": "node scripts/sync-photos.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },

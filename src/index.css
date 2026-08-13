@@ -13,3 +13,34 @@
     background-color: var(--color-ink);
   }
 }
+
+/* Stair-stepped corners, cut in whole "pixels", so a thick frame reads as
+   pixel art rather than a rounded box. Applied to a coloured outer box and its
+   inset inner box, the gap between them becomes the border. */
+@layer components {
+  .pixel-frame {
+    --pixel-step: 5px;
+    clip-path: polygon(
+      0 calc(var(--pixel-step) * 2),
+      var(--pixel-step) calc(var(--pixel-step) * 2),
+      var(--pixel-step) var(--pixel-step),
+      calc(var(--pixel-step) * 2) var(--pixel-step),
+      calc(var(--pixel-step) * 2) 0,
+      calc(100% - var(--pixel-step) * 2) 0,
+      calc(100% - var(--pixel-step) * 2) var(--pixel-step),
+      calc(100% - var(--pixel-step)) var(--pixel-step),
+      calc(100% - var(--pixel-step)) calc(var(--pixel-step) * 2),
+      100% calc(var(--pixel-step) * 2),
+      100% calc(100% - var(--pixel-step) * 2),
+      calc(100% - var(--pixel-step)) calc(100% - var(--pixel-step) * 2),
+      calc(100% - var(--pixel-step)) calc(100% - var(--pixel-step)),
+      calc(100% - var(--pixel-step) * 2) calc(100% - var(--pixel-step)),
+      calc(100% - var(--pixel-step) * 2) 100%,
+      calc(var(--pixel-step) * 2) 100%,
+      calc(var(--pixel-step) * 2) calc(100% - var(--pixel-step)),
+      var(--pixel-step) calc(100% - var(--pixel-step)),
+      var(--pixel-step) calc(100% - var(--pixel-step) * 2),
+      0 calc(100% - var(--pixel-step) * 2)
+    );
+  }
+}

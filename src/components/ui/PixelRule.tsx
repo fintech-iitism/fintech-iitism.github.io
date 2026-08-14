@@ -4,7 +4,12 @@ interface PixelRuleProps {
   className?: string
 }
 
-/** Decorative dashed divider drawn in the pixel face, as on the hero. */
+/**
+ * Decorative dashed divider drawn in the pixel face, as on the hero. Static on
+ * purpose: it sits under headings, where a rule that keeps rearranging itself
+ * fights the words above it. The moving glyph edges are `GlyphRule` and
+ * `AsciiBorder`.
+ */
 export function PixelRule({ length = 13, className = '' }: PixelRuleProps) {
   return (
     <div

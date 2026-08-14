@@ -49,6 +49,9 @@ const SPREAD = 0.82
 const DIRECTED = 0.55
 // Seconds for the spotlight to open or close.
 const FADE = 0.25
+// Share of the spotlight radius that stays fully opaque before the rim starts
+// feathering out.
+const CORE = 0.78
 // Frames per second while idle, when only the character flicker is moving.
 const IDLE_FPS = 12
 
@@ -127,9 +130,17 @@ export function AsciiHoverImage({
 
       if (reveal <= 0.001 || !image) return
 
-      // Whole photo cross-fading in over the glyphs, no cursor involved.
+      // The glyphs are cleared out of the revealed area rather than covered by
+      // the photo. Covering only works for a photo that is opaque everywhere;
+      // these are cutouts, and every pixel where the artwork is part
+      // transparent lets the character underneath read through it. Erasing
+      // first means the reveal is a hole with the photo sitting in it.
       if (fullReveal) {
+        ctx.globalCompositeOperation = 'destination-out'
         ctx.globalAlpha = reveal
+        ctx.fillStyle = '#000'
+        ctx.fillRect(0, 0, w, h)
+        ctx.globalCompositeOperation = 'source-over'
         ctx.drawImage(image, crop.x, crop.y, crop.w, crop.h, 0, 0, w, h)
         ctx.globalAlpha = 1
         return
@@ -137,17 +148,28 @@ export function AsciiHoverImage({
 
       if (!pctx) return
 
-      // Photo clipped to a soft circle, then laid over the glyphs. Drawing it
-      // opaque means no half-and-half blend can darken the edge.
+      // Solid out to CORE, then feathered to nothing. Used twice, once to punch
+      // the glyphs out and once to clip the photo, so the hole and the photo in
+      // it share an edge exactly.
       const r = revealRadius * (0.65 + 0.35 * reveal)
+      const mask = (c: CanvasRenderingContext2D): CanvasGradient => {
+        const g = c.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, r)
+        g.addColorStop(0, `rgba(0,0,0,${reveal})`)
+        g.addColorStop(CORE, `rgba(0,0,0,${reveal})`)
+        g.addColorStop(1, 'rgba(0,0,0,0)')
+        return g
+      }
+
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.fillStyle = mask(ctx)
+      ctx.fillRect(0, 0, w, h)
+      ctx.globalCompositeOperation = 'source-over'
+
+      // Photo clipped to the same circle, then laid into the hole.
       pctx.clearRect(0, 0, w, h)
       pctx.drawImage(image, crop.x, crop.y, crop.w, crop.h, 0, 0, w, h)
       pctx.globalCompositeOperation = 'destination-in'
-      const fade = pctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, r)
-      fade.addColorStop(0, `rgba(0,0,0,${reveal})`)
-      fade.addColorStop(0.6, `rgba(0,0,0,${reveal * 0.92})`)
-      fade.addColorStop(1, 'rgba(0,0,0,0)')
-      pctx.fillStyle = fade
+      pctx.fillStyle = mask(pctx)
       pctx.fillRect(0, 0, w, h)
       pctx.globalCompositeOperation = 'source-over'
 

@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, useReducedMotion } from 'motion/react'
+import { Frame } from './Frame'
 import { PixelRule } from './PixelRule'
 import type { DivisionDetail } from './DivisionPanel'
 
@@ -77,9 +78,13 @@ export function DivisionModal({
         animate={{ opacity: 1, scale: 1 }}
         exit={still ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
         transition={{ duration: still ? 0 : 0.28, ease: 'easeOut' }}
-        className="pixel-frame relative max-h-[90svh] w-full max-w-5xl overflow-hidden bg-brand/70 p-[4px] focus:outline-none"
+        className="relative flex max-h-[90svh] w-full max-w-5xl flex-col focus:outline-none"
       >
-        <div className="pixel-frame max-h-[calc(90svh-8px)] overflow-y-auto bg-ink px-6 py-10 md:px-10 md:py-12">
+        <Frame
+          tone="brand"
+          className="flex min-h-0 flex-1 flex-col"
+          innerClassName="overflow-y-auto px-6 py-10 md:px-10 md:py-12"
+        >
           <div className="grid gap-8 md:grid-cols-5 md:items-center md:gap-12">
             <div className="min-w-0 md:col-span-2">
               <p className="font-mono text-xs tracking-[0.2em] text-white/40">
@@ -116,13 +121,15 @@ export function DivisionModal({
               </div>
             ))}
           </dl>
-        </div>
+        </Frame>
 
+        {/* Outside the frame's scrolling box, so it stays pinned to the corner
+            while the details scroll under it. */}
         <button
           type="button"
           onClick={onClose}
           aria-label={`Close ${title}`}
-          className="absolute right-4 top-4 font-pixel text-lg text-white/60 transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand md:right-6 md:top-6"
+          className="absolute right-4 top-4 z-10 font-pixel text-lg text-white/60 transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand md:right-6 md:top-6"
         >
           X
         </button>

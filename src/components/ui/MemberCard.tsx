@@ -3,6 +3,7 @@ import type { Member } from '../../data/members'
 import { divisionTint } from '../../data/divisions'
 import { AsciiHoverImage } from './AsciiHoverImage'
 import { GithubIcon, LinkedinIcon, MailIcon } from './BrandIcons'
+import { Frame } from './Frame'
 
 const PLACEHOLDER = '/member-placeholder.png'
 
@@ -56,8 +57,8 @@ export function MemberCard({
   }
 
   return (
-    <article className="group pixel-frame h-full bg-white/15 p-[4px] transition-colors hover:bg-brand/70">
-      <div className="pixel-frame flex h-full flex-col bg-ink p-3">
+    <Frame className="group h-full" innerClassName="flex flex-col p-3">
+      <article className="flex h-full flex-col">
         {/* Fixed box so portraits of any ratio stay on the grid; the ASCII
             canvas fills it and the photo underneath only sets the height. */}
         <AsciiHoverImage
@@ -119,7 +120,7 @@ export function MemberCard({
             </ul>
           ) : null}
         </div>
-      </div>
-    </article>
+      </article>
+    </Frame>
   )
 }

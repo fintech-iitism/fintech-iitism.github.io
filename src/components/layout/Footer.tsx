@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { GlyphRule } from '../ui/ascii/GlyphRule'
 
 interface FooterLink {
   label: string
@@ -28,8 +29,12 @@ const socialLinks: ExternalLink[] = [
 
 export function Footer() {
   return (
-    <footer className="relative z-10 w-full border-t border-white/10 px-6 py-12 md:px-10">
-      <div className="flex flex-col gap-10 md:flex-row md:justify-between">
+    <footer className="relative z-10 w-full">
+      {/* Full bleed, outside the padding, so the rule reads as the page's edge
+          the way the hairline border it replaces did. */}
+      <GlyphRule fill className="text-sm text-white/20" />
+
+      <div className="flex flex-col gap-10 px-6 py-12 md:flex-row md:justify-between md:px-10">
         <div className="max-w-xs">
           <img
             src="/logo-mark.png"
@@ -78,9 +83,13 @@ export function Footer() {
         </nav>
       </div>
 
-      <div className="mt-10 flex flex-col gap-2 border-t border-white/5 pt-6 font-mono text-xs text-white/40 sm:flex-row sm:justify-between">
-        <p>© {new Date().getFullYear()} Fintech Club, IIT (ISM) Dhanbad.</p>
-        <p>Built by the club, in Dhanbad.</p>
+      <div className="px-6 pb-12 md:px-10">
+        <GlyphRule fill className="text-sm text-white/15" />
+
+        <div className="mt-6 flex flex-col gap-2 font-mono text-xs text-white/40 sm:flex-row sm:justify-between">
+          <p>© {new Date().getFullYear()} Fintech Club, IIT (ISM) Dhanbad.</p>
+          <p>Built by the club, in Dhanbad.</p>
+        </div>
       </div>
     </footer>
   )

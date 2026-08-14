@@ -10,8 +10,7 @@
 
 @layer base {
   /* Declares the dark canvas, so the browser does not treat this as a light
-     page: without it the backdrop-filter on the navbar samples a white base
-     canvas and forced-dark re-themes the bar to a blue grey. */
+     page and forced-dark re-theme it to a blue grey. */
   :root {
     color-scheme: dark;
   }
@@ -25,6 +24,26 @@
    pixel art rather than a rounded box. Applied to a coloured outer box and its
    inset inner box, the gap between them becomes the border. */
 @layer components {
+  /* Checkerboard of ink on the same 4px block the backdrop dithers with: half
+     the blocks are solid and half let the page through, which is how the
+     navbar sits over the content now that it does not blur it. A gradient
+     cannot do this, and a conic one tiled to a block can: the two ink
+     quadrants land opposite each other. */
+  /* Three of the four quadrants in every cell are solid ink, so the plate is
+     mostly opaque and only the fourth lets the page through. A half and half
+     checker left too much of whatever scrolled under the bar readable through
+     it. Pair it with a high base opacity: the texture is the gap between the
+     solid quadrants and that base, so the base can go nearly opaque and the
+     dither still reads. */
+  .dither-plate {
+    background-image: conic-gradient(
+      var(--color-ink) 0 50%,
+      transparent 0 75%,
+      var(--color-ink) 0
+    );
+    background-size: 8px 8px;
+  }
+
   .pixel-frame {
     --pixel-step: 5px;
     clip-path: polygon(

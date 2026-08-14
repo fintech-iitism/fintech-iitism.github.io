@@ -1,6 +1,7 @@
-import { useEffect, useRef, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, useReducedMotion } from 'motion/react'
+import { useDialog } from '../../hooks/useDialog'
 import { Frame } from './Frame'
 import { PixelRule } from './PixelRule'
 import type { DivisionDetail } from './DivisionPanel'
@@ -29,32 +30,9 @@ export function DivisionModal({
   onClose,
 }: DivisionModalProps) {
   const still = useReducedMotion()
-  const panel = useRef<HTMLDivElement>(null)
-
   // Escape closes, and the page behind is frozen so the scroll wheel acts on
   // the dialog rather than the section underneath it.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', onKey)
-
-    // Freezing the body removes the scrollbar, and on a classic scrollbar that
-    // hands the page back its width and shifts everything sideways. The width
-    // it loses is padded back on for as long as the dialog is up; browsers with
-    // overlay scrollbars measure zero here and are left alone.
-    const { overflow, paddingRight } = document.body.style
-    const gutter = window.innerWidth - document.documentElement.clientWidth
-    document.body.style.overflow = 'hidden'
-    if (gutter > 0) document.body.style.paddingRight = `${gutter}px`
-    panel.current?.focus()
-
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.body.style.overflow = overflow
-      document.body.style.paddingRight = paddingRight
-    }
-  }, [onClose])
+  const panel = useDialog(onClose)
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">

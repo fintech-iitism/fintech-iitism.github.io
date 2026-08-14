@@ -19,12 +19,10 @@ const siteLinks: FooterLink[] = [
   { label: 'Events', to: '/events' },
 ]
 
-// Placeholder destinations until the club's real handles are wired in.
 const socialLinks: ExternalLink[] = [
-  { label: 'Instagram', href: '#' },
-  { label: 'LinkedIn', href: '#' },
-  { label: 'GitHub', href: '#' },
-  { label: 'Email', href: 'mailto:fintech@iitism.ac.in' },
+  { label: 'Instagram', href: 'https://www.instagram.com/fintech_iitism' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/fintech-iitism' },
+  { label: 'Email', href: 'mailto:fintech_club@iitism.ac.in' },
 ]
 
 export function Footer() {

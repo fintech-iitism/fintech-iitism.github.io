@@ -44,6 +44,42 @@
   body {
     background-color: var(--color-ink);
   }
+
+  /* The default bar is the one rounded, grey, system looking element on the
+     page. Square it off and put it in the site's own colours. Both syntaxes are
+     needed: the standard properties are all Firefox supports, and the WebKit
+     pseudo elements are what allow a hard edged thumb at an exact width. */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.25) var(--color-ink);
+    /* Hold the gutter open so moving between a page that scrolls and one that
+       does not never shifts the layout sideways. */
+    scrollbar-gutter: stable;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 0.25);
+    /* No radius, and an ink border on all sides, so the thumb reads as a block
+       sitting in the track rather than a pill filling it. */
+    border: 3px solid var(--color-ink);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: var(--color-ink);
+  }
 }
 
 /* Stair-stepped corners, cut in whole "pixels", so a thick frame reads as

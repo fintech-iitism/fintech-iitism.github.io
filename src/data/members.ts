@@ -47,7 +47,7 @@ export interface Member {
  * rather than the name, which is neither unique nor stable. Mirrored in
  * scripts/sync-photos.mjs.
  */
-export const photoSlug = (admission: string): string => admission.toLowerCase()
+const photoSlug = (admission: string): string => admission.toLowerCase()
 
 const resolvePhoto = (entry: MemberEntry): string | undefined => {
   if (!entry.photo) return undefined

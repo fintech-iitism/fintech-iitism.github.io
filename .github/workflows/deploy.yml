@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets the site be redeployed from the Actions tab without a commit, which is
+  # what you want after changing anything in the repository's Pages settings.
+  workflow_dispatch:
+
+# Read the repository, mint the token deploy-pages exchanges for a deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time, and let a newer push win: a queued build of an
+# older commit has nothing useful to publish once main has moved on.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # ci rather than install, so the build uses the resolved tree in
+      # package-lock.json instead of whatever the ranges pick up that day.
+      - run: npm ci
+
+      # Runs tsc first, then vite, then copies index.html to 404.html. That copy
+      # is what makes deep links work: Pages has no rewrite rules, so it answers
+      # /members with 404.html, and the app reads the real path from there.
+      - run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -70,7 +70,11 @@ export function About() {
   // continuous column of stacked content.
   return (
     <section id="about" className="relative z-10 w-full">
-      <div className="mx-auto flex min-h-svh max-w-5xl flex-col items-center justify-center px-6 py-24 text-center md:px-10">
+      {/* Centred in its own screen, so most of the space under the link is the
+          leftover the centring hands back. The bottom padding is small on top of
+          that: the divisions heading is the next thing down and the two read as
+          one run of the page, not as two separated screens. */}
+      <div className="mx-auto flex min-h-svh max-w-5xl flex-col items-center justify-center px-6 pt-24 pb-8 text-center md:px-10">
         <h2 className="font-pixel text-2xl leading-tight text-white">
           About <span className="text-brand">Us</span>
         </h2>
@@ -101,11 +105,32 @@ export function About() {
         </Link>
       </div>
 
+      {/* No vertical padding of its own: the block above ends close underneath
+          it and the first panel's py-24 supplies the gap below, so any added
+          here only pushes the heading away from the divisions it labels. */}
+      <div className="mx-auto flex max-w-5xl flex-col items-center px-6 text-center md:px-10">
+        <h2 className="font-pixel text-2xl leading-tight text-white">
+          Our <span className="text-brand">Divisions</span>
+        </h2>
+
+        <PixelRule className="mt-4 text-lg md:mt-6" />
+
+        <p className="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-white/70">
+          Two wings, one club.
+        </p>
+      </div>
+
       <ul className="flex w-full flex-col">
         {divisions.map((division, i) => (
           <li
             key={division.title}
-            className="mx-auto flex min-h-svh w-full max-w-5xl items-center px-6 py-24 md:px-10"
+            // Nudged off centre, each division toward the side its sim sits on,
+            // so the two lean apart instead of stacking dead centre. Only from
+            // xl: the panel is 1024px wide, so below that there is no slack to
+            // move into without shrinking it.
+            className={`mx-auto flex min-h-svh w-full max-w-5xl items-center px-6 py-24 md:px-10 ${
+              division.from === 'left' ? 'xl:mr-[8%]' : 'xl:ml-[8%]'
+            }`}
           >
             <DivisionPanel index={i + 1} {...division} />
           </li>

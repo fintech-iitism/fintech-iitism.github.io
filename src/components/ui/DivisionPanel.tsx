@@ -1,6 +1,5 @@
-import { useState, type ReactNode } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { DivisionModal } from './DivisionModal'
+import type { ReactNode } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import { Frame } from './Frame'
 import { PixelRule } from './PixelRule'
 
@@ -16,7 +15,7 @@ interface DivisionPanelProps {
   body: string
   /** Side the sim sits on from md, so the two divisions mirror each other. */
   from: 'left' | 'right'
-  /** Extra copy shown once the panel is opened. */
+  /** What the division actually does, broken into its strands. */
   details: DivisionDetail[]
   /** ASCII sim for the division. */
   visual?: ReactNode
@@ -24,10 +23,11 @@ interface DivisionPanelProps {
 
 /**
  * One division as a pixel-framed card: the same two stacked clipped boxes as
- * the member cards, so the divisions and the people read as one system. The
- * whole card is a button, and clicking it opens the division as a dialog over
- * the page rather than growing the card in the flow, which would push the rest
- * of the section down and leave the reader scrolling to catch up.
+ * the member cards, so the divisions and the people read as one system.
+ *
+ * Everything is on the page at once. The detail used to be behind a click that
+ * opened the panel as a dialog, which hid the part that answers what the
+ * division does behind an interaction a reader has no reason to expect.
  */
 export function DivisionPanel({
   index,
@@ -38,7 +38,6 @@ export function DivisionPanel({
   visual,
 }: DivisionPanelProps) {
   const still = useReducedMotion()
-  const [open, setOpen] = useState(false)
   const right = from === 'right'
 
   return (
@@ -49,20 +48,11 @@ export function DivisionPanel({
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="w-full"
     >
-      <Frame>
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-haspopup="dialog"
-          aria-expanded={open}
-          className="grid w-full cursor-pointer gap-8 px-6 py-10 text-left md:grid-cols-5 md:items-center md:gap-12 md:px-10 md:py-12 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-        >
+      <Frame innerClassName="px-6 py-10 md:px-10 md:py-12">
+        <div className="grid gap-8 md:grid-cols-5 md:items-center md:gap-12">
           <div className={`min-w-0 md:col-span-2 ${right ? 'md:order-2' : ''}`}>
-            <p className="flex items-center gap-3 font-mono text-xs tracking-[0.2em] text-white/40">
+            <p className="font-mono text-xs tracking-[0.2em] text-white/40">
               {String(index).padStart(2, '0')} / DIVISION
-              <span aria-hidden="true" className="text-brand">
-                [ + ]
-              </span>
             </p>
 
             <h3 className="mt-3 font-pixel text-2xl leading-tight text-white">
@@ -74,8 +64,6 @@ export function DivisionPanel({
             <p className="mt-4 max-w-md font-mono text-sm leading-relaxed text-white/70">
               {body}
             </p>
-
-            <p className="mt-4 font-mono text-xs text-brand/80">Read more</p>
           </div>
 
           {/* The sim takes the wider share: the chart needs the columns more
@@ -87,21 +75,21 @@ export function DivisionPanel({
               {visual}
             </div>
           ) : null}
-        </button>
-      </Frame>
+        </div>
 
-      <AnimatePresence>
-        {open ? (
-          <DivisionModal
-            index={index}
-            title={title}
-            body={body}
-            details={details}
-            visual={visual}
-            onClose={() => setOpen(false)}
-          />
-        ) : null}
-      </AnimatePresence>
+        <PixelRule length={26} className="mt-10 text-sm text-white/25" />
+
+        <dl className="mt-6 grid gap-6 md:grid-cols-2 md:gap-8">
+          {details.map((detail) => (
+            <div key={detail.label} className="min-w-0">
+              <dt className="font-pixel text-sm text-brand">{detail.label}</dt>
+              <dd className="mt-2 font-mono text-xs leading-relaxed text-white/70">
+                {detail.body}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </Frame>
     </motion.article>
   )
 }

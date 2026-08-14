@@ -77,13 +77,13 @@ export function MemberCard({
             filler is a non-breaking space; a plain one collapses and the row
             loses its height. */}
         <p
-          className="mt-4 font-mono text-[10px] tracking-[0.2em] text-brand"
+          className="mt-4 font-mono text-2xs tracking-[0.2em] text-brand"
           aria-hidden={role ? undefined : true}
         >
           {role?.toUpperCase() ?? ' '}
         </p>
 
-        <h3 className="mt-1.5 font-pixel text-sm leading-tight break-words text-white md:text-base">
+        <h3 className="mt-1.5 font-pixel text-sm leading-tight break-words text-white">
           {name}
         </h3>
         <p className="mt-1 font-mono text-xs leading-relaxed text-white/50">
@@ -95,7 +95,7 @@ export function MemberCard({
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
           {division ? (
             <span
-              className={`border px-1.5 py-0.5 font-mono text-[10px] tracking-[0.15em] ${divisionTint[division]}`}
+              className={`border px-1.5 py-0.5 font-mono text-2xs tracking-[0.15em] ${divisionTint[division]}`}
             >
               {division.toUpperCase()}
             </span>

@@ -71,27 +71,33 @@ export function About() {
   return (
     <section id="about" className="relative z-10 w-full">
       <div className="mx-auto flex min-h-svh max-w-5xl flex-col items-center justify-center px-6 py-24 text-center md:px-10">
-        <h2 className="font-pixel text-2xl leading-tight text-white md:text-4xl">
+        <h2 className="font-pixel text-2xl leading-tight text-white">
           About <span className="text-brand">Us</span>
         </h2>
 
-        <PixelRule className="mt-4 text-base md:mt-6 md:text-2xl" />
+        <PixelRule className="mt-4 text-lg md:mt-6" />
 
-        <p className="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-white/80 md:text-base">
+        <p className="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-white/80">
           Fintech Club is the student body at IIT (ISM) Dhanbad working at the
           point where finance stops being theory and starts being software. We
           read markets, write code, and argue about both.
         </p>
 
-        <p className="mt-4 max-w-2xl font-mono text-xs leading-relaxed text-white/60 md:text-sm">
+        <p className="mt-4 max-w-2xl font-mono text-xs leading-relaxed text-white/60">
           No prior background is assumed. Curiosity is the only prerequisite.
         </p>
 
+        {/* A link, styled like the ones in the nav and the footer: mono, in
+            sentence case, brand until hovered. No box and no fill, so it does
+            not compete with the framed panels below it. */}
         <Link
           to="/members"
-          className="mt-8 font-mono text-xs text-brand md:mt-10 md:text-sm underline-offset-8 transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+          className="group mt-10 font-mono text-sm text-brand transition-colors hover:text-white md:mt-12 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
-          Meet the members →
+          Meet the members{' '}
+          <span className="inline-block transition-transform group-hover:translate-x-1">
+            →
+          </span>
         </Link>
       </div>
 

@@ -65,13 +65,13 @@ export function DivisionPanel({
               </span>
             </p>
 
-            <h3 className="mt-3 font-pixel text-2xl leading-tight text-white md:text-3xl">
+            <h3 className="mt-3 font-pixel text-2xl leading-tight text-white">
               {title}
             </h3>
 
             <PixelRule length={7} className="mt-3 text-sm text-brand" />
 
-            <p className="mt-4 max-w-md font-mono text-sm leading-relaxed text-white/70 md:text-base">
+            <p className="mt-4 max-w-md font-mono text-sm leading-relaxed text-white/70">
               {body}
             </p>
 

@@ -3,7 +3,7 @@
     "name": "Hruday Chilukuri",
     "admission": "24JE0273",
     "batch": 2028,
-    "branch": "Mechanical Engineering",
+    "branch": "ME",
     "email": "hruday.chilukuri@gmail.com",
     "github": "https://github.com/hrudaych1099",
     "linkedin": "https://www.linkedin.com/in/hrudaychilukuri/",
@@ -13,14 +13,14 @@
     "name": "Nikhil Aggarwal",
     "admission": "24JE0953",
     "batch": 2028,
-    "branch": "Mineral and Metallurgical Engineering",
+    "branch": "MME",
     "email": "nikhil181220@gmail.com"
   },
   {
     "name": "Harshit Dubey",
     "admission": "24JE0734",
     "batch": 2028,
-    "branch": "Engineering Physics",
+    "branch": "EP",
     "email": "dubeyharshit1807@gmail.com",
     "photo": "drive:1qkHTly8XeoAHD2QC0yv1chdTx4PsdRIN"
   },
@@ -39,7 +39,7 @@
     "name": "Pushkar Kumar",
     "admission": "24JE1036",
     "batch": 2028,
-    "branch": "Petroleum Engineering",
+    "branch": "PE",
     "email": "24je1036@iitism.ac.in",
     "photo": "drive:12tAuPkN-c-kJBiEQKqPWhdX3IBX2PP82"
   },
@@ -47,13 +47,13 @@
     "name": "Raghu Lakhotia",
     "admission": "24JE0433",
     "batch": 2028,
-    "branch": "Mining Engineering"
+    "branch": "MIN"
   },
   {
     "name": "Lakshay Kumar",
     "admission": "24JE0555",
     "batch": 2028,
-    "branch": "Chemical Engineering",
+    "branch": "CHE",
     "email": "24je0555@iitism.ac.in",
     "github": "https://github.com/xLakshay1",
     "linkedin": "https://www.linkedin.com/in/lakshay-kumar-8b73a1268/",
@@ -63,7 +63,7 @@
     "name": "Piyush Kumar",
     "admission": "24JE1033",
     "batch": 2028,
-    "branch": "Petroleum Engineering",
+    "branch": "PE",
     "email": "24je1033@iitism.ac.in",
     "github": "https://github.com/piyushkr0",
     "linkedin": "https://www.linkedin.com/in/piyush-kumar-1b7653320/",
@@ -91,7 +91,7 @@
     "name": "Gupta Rahul Kartaram",
     "admission": "24JE0403",
     "batch": 2028,
-    "branch": "Mining Engineering",
+    "branch": "MIN",
     "email": "24je0403@iitism.ac.in",
     "github": "https://github.com/RahulGupta2116",
     "linkedin": "https://www.linkedin.com/in/rahul-gupta-583297311/",
@@ -117,14 +117,14 @@
     "name": "Anupama Prabhala",
     "admission": "24JE0153",
     "batch": 2028,
-    "branch": "Electrical Engineering",
+    "branch": "EE",
     "email": "24je0153@iitism.ac.in"
   },
   {
     "name": "Bhavesh Jat",
     "admission": "24JE0096",
     "batch": 2028,
-    "branch": "Electrical Engineering",
+    "branch": "EE",
     "email": "24je0096@iitism.ac.in",
     "github": "https://github.com/Bhavesh-hub643",
     "linkedin": "https://www.linkedin.com/in/bhavesh-jat-b68360276/"
@@ -133,7 +133,7 @@
     "name": "Dhruv Bohra",
     "admission": "24JE0397",
     "batch": 2028,
-    "branch": "Mining Engineering",
+    "branch": "MIN",
     "email": "24je0397@iitism.ac.in",
     "github": "https://github.com/dhruvbohra173",
     "linkedin": "https://www.linkedin.com/in/dhruv-bohra-a9810b320"

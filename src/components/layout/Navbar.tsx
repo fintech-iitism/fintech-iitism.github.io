@@ -113,7 +113,7 @@ export function Navbar() {
           />
         </NavLink>
 
-        <ul className="hidden items-center font-mono text-white md:flex md:gap-8 md:text-sm lg:gap-12">
+        <ul className="hidden items-center font-mono text-white text-sm md:flex md:gap-8 lg:gap-12">
           {items.map((item) => (
             <li key={item.to}>
               <NavItemLink item={item} />
@@ -127,22 +127,22 @@ export function Navbar() {
           aria-controls="mobile-nav"
           aria-label={open ? 'Close menu' : 'Open menu'}
           onClick={() => setOpen(!open)}
-          className="flex h-8 w-8 flex-col items-center justify-center gap-[4px] text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand md:hidden"
+          className="flex h-8 w-8 flex-col items-center justify-center gap-[3px] text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand md:hidden"
         >
           {/* Square bars, no rounding, to sit with the pixel type. */}
           <span
-            className={`block h-[2px] w-5 bg-current transition-transform ${
-              open ? 'translate-y-[6px] rotate-45' : ''
+            className={`block h-[2px] w-4 bg-current transition-transform ${
+              open ? 'translate-y-[5px] rotate-45' : ''
             }`}
           />
           <span
-            className={`block h-[2px] w-5 bg-current transition-opacity ${
+            className={`block h-[2px] w-4 bg-current transition-opacity ${
               open ? 'opacity-0' : ''
             }`}
           />
           <span
-            className={`block h-[2px] w-5 bg-current transition-transform ${
-              open ? '-translate-y-[6px] -rotate-45' : ''
+            className={`block h-[2px] w-4 bg-current transition-transform ${
+              open ? '-translate-y-[5px] -rotate-45' : ''
             }`}
           />
         </button>

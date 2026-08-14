@@ -6,6 +6,32 @@
 
   --color-ink: #191919;
   --color-brand: #5fb87a;
+
+  /* One fluid type scale for the whole site. Each step interpolates between
+     its phone size and its desktop size across 375px..1280px of viewport and
+     clamps at both ends, which is what replaces the `text-x md:text-y` pairs
+     that used to be written out per element: a step is now one class that
+     already knows how it grows. Sizes only. The default line-height ratios
+     Tailwind pairs with each step still apply, and they are unitless, so they
+     follow the clamp.
+
+     2xs  10 -> 12  badges, chips, the rank eyebrow
+     xs   12 -> 14  fine print
+     sm   14 -> 16  body copy, links, labels
+     base 16 -> 18  lead paragraphs
+     lg   18 -> 24  the dashed rules under headings
+     xl   20 -> 30  sub-headings
+     2xl  24 -> 36  section headings
+     3xl  30 -> 48  page titles */
+  --text-2xs: clamp(0.625rem, 0.573rem + 0.22vw, 0.75rem);
+  --text-2xs--line-height: 1.4;
+  --text-xs: clamp(0.75rem, 0.698rem + 0.22vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.823rem + 0.22vw, 1rem);
+  --text-base: clamp(1rem, 0.948rem + 0.22vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 0.97rem + 0.66vw, 1.5rem);
+  --text-xl: clamp(1.25rem, 0.99rem + 1.11vw, 1.875rem);
+  --text-2xl: clamp(1.5rem, 1.19rem + 1.33vw, 2.25rem);
+  --text-3xl: clamp(1.875rem, 1.41rem + 1.99vw, 3rem);
 }
 
 @layer base {

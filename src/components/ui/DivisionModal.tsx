@@ -91,13 +91,13 @@ export function DivisionModal({
                 {String(index).padStart(2, '0')} / DIVISION
               </p>
 
-              <h3 className="mt-3 font-pixel text-2xl leading-tight text-white md:text-4xl">
+              <h3 className="mt-3 font-pixel text-2xl leading-tight text-white">
                 {title}
               </h3>
 
               <PixelRule length={7} className="mt-3 text-sm text-brand" />
 
-              <p className="mt-4 font-mono text-sm leading-relaxed text-white/70 md:text-base">
+              <p className="mt-4 font-mono text-sm leading-relaxed text-white/70">
                 {body}
               </p>
             </div>
@@ -112,10 +112,10 @@ export function DivisionModal({
           <dl className="mt-6 grid gap-6 md:grid-cols-2 md:gap-8">
             {details.map((detail) => (
               <div key={detail.label} className="min-w-0">
-                <dt className="font-pixel text-sm text-brand md:text-base">
+                <dt className="font-pixel text-sm text-brand">
                   {detail.label}
                 </dt>
-                <dd className="mt-2 font-mono text-xs leading-relaxed text-white/70 md:text-sm">
+                <dd className="mt-2 font-mono text-xs leading-relaxed text-white/70">
                   {detail.body}
                 </dd>
               </div>

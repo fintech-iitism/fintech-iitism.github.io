@@ -8,7 +8,7 @@ import {
 } from './ascii/frameStyle'
 
 const chip = (on: boolean): string =>
-  `border px-2 py-1 font-mono text-[10px] tracking-[0.15em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+  `border px-2 py-1 font-mono text-2xs tracking-[0.15em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
     on
       ? 'border-brand bg-brand/20 text-brand'
       : 'border-white/20 text-white/50 hover:border-white/40 hover:text-white'
@@ -28,7 +28,7 @@ export function FrameStyleToggle() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 right-4 z-40 border border-white/20 bg-ink/85 px-2 py-1 font-mono text-[10px] tracking-[0.15em] text-white/50 backdrop-blur transition-colors hover:border-brand hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        className="fixed bottom-4 right-4 z-40 border border-white/20 bg-ink/85 px-2 py-1 font-mono text-2xs tracking-[0.15em] text-white/50 backdrop-blur transition-colors hover:border-brand hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
         BORDERS
       </button>
@@ -38,7 +38,7 @@ export function FrameStyleToggle() {
   return (
     <div className="fixed bottom-4 right-4 z-40 border border-white/20 bg-ink/85 p-3 backdrop-blur">
       <div className="flex items-center justify-between gap-6">
-        <p className="font-mono text-[10px] tracking-[0.2em] text-white/40">
+        <p className="font-mono text-2xs tracking-[0.2em] text-white/40">
           BORDERS
         </p>
         <button

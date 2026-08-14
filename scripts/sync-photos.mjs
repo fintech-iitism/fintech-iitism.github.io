@@ -10,11 +10,8 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const outDir = join(root, 'public', 'members')
 
-const slug = (name) =>
-  name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
+// Mirrors photoSlug in src/data/members.ts.
+const slug = (admission) => admission.toLowerCase()
 
 const roster = JSON.parse(
   await readFile(join(root, 'src', 'data', 'members.json'), 'utf8'),
@@ -27,7 +24,7 @@ for (const entry of roster) {
   if (!entry.photo?.startsWith('drive:')) continue
 
   const id = entry.photo.slice('drive:'.length)
-  const target = join(outDir, `${slug(entry.name)}.jpg`)
+  const target = join(outDir, `${slug(entry.admission)}.jpg`)
   const res = await fetch(
     `https://drive.google.com/uc?export=download&id=${id}`,
     { redirect: 'follow' },
@@ -49,7 +46,7 @@ for (const entry of roster) {
   }
 
   await writeFile(target, Buffer.from(await res.arrayBuffer()))
-  console.log(`✓ ${entry.name} → public/members/${slug(entry.name)}.jpg`)
+  console.log(`✓ ${entry.name} → public/members/${slug(entry.admission)}.jpg`)
   downloaded++
 }
 

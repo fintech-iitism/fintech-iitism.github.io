@@ -261,8 +261,6 @@ export function AsciiHoverImage({
         })
       }
 
-      // The canvas paints everything now; the element only holds the box open.
-      imgEl.style.visibility = 'hidden'
       draw()
     }
 
@@ -326,7 +324,11 @@ export function AsciiHoverImage({
       onPointerMove={track}
       onPointerLeave={() => apiRef.current?.show(false)}
     >
-      <img ref={imgRef} src={src} alt={alt} className="block w-full" />
+      {/* Hidden from the first paint, not once the ASCII is built: the photo
+          would otherwise show for the frames the decode takes. `visibility`
+          rather than `display` or `hidden`, because callers that set no aspect
+          ratio still take their height from this element. */}
+      <img ref={imgRef} src={src} alt={alt} className="invisible block w-full" />
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full" />
     </div>
   )

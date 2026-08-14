@@ -1,68 +1,110 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router'
+import { DivisionPanel, type DivisionDetail } from '../ui/DivisionPanel'
+import { MonteCarlo } from '../ui/ascii/MonteCarlo'
+import { TickerChart } from '../ui/ascii/TickerChart'
 import { PixelRule } from '../ui/PixelRule'
 
-interface Pillar {
+interface Division {
   title: string
   body: string
+  from: 'left' | 'right'
+  details: DivisionDetail[]
+  visual: ReactNode
 }
 
-const pillars: Pillar[] = [
+const divisions: Division[] = [
   {
     title: 'Finance',
     body: 'Equity research, trading strategy and macro discussions, run as weekly sessions open to every branch.',
+    from: 'left',
+    details: [
+      {
+        label: 'Equity Research',
+        body: 'Company teardowns end to end: filings, valuation models and a written thesis defended in front of the club.',
+      },
+      {
+        label: 'Markets Desk',
+        body: 'A weekly read on rates, currencies and the headlines that moved them, so the numbers stay attached to the world.',
+      },
+      {
+        label: 'Trading Strategy',
+        body: 'Paper portfolios with real rules: sizing, risk limits and a post mortem on every position that went wrong.',
+      },
+      {
+        label: 'Start Here',
+        body: 'Sessions assume nothing. Bring a laptop and an opinion; the reading list gets you the rest.',
+      },
+    ],
+    visual: <TickerChart />,
   },
   {
     title: 'Quant',
     body: 'Statistics, backtesting and data driven modelling, from first principles up to competition grade work.',
+    from: 'right',
+    details: [
+      {
+        label: 'Foundations',
+        body: 'Probability, time series and stochastic processes, taught the way they actually show up in a pricing model.',
+      },
+      {
+        label: 'Backtesting',
+        body: 'Building engines in Python, then breaking them: lookahead bias, survivorship and the costs everyone forgets.',
+      },
+      {
+        label: 'Modelling',
+        body: 'Signal research and machine learning on market data, judged on out of sample results rather than fit.',
+      },
+      {
+        label: 'Competitions',
+        body: 'Teams for trading and datathon contests, with internal problem sets running through the term.',
+      },
+    ],
+    visual: <MonteCarlo />,
   },
 ]
 
 export function About() {
+  // Every block below owns a screen of its own, on the same rhythm as the
+  // hero, so scrolling moves between whole beats rather than through a
+  // continuous column of stacked content.
   return (
-    <section
-      id="about"
-      className="relative z-10 w-full px-6 py-20 md:px-10 md:py-28"
-    >
-      <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
-        <h2 className="font-pixel text-lg leading-tight text-white sm:text-xl md:text-3xl">
+    <section id="about" className="relative z-10 w-full">
+      <div className="mx-auto flex min-h-svh max-w-5xl flex-col items-center justify-center px-6 py-24 text-center md:px-10">
+        <h2 className="font-pixel text-2xl leading-tight text-white md:text-4xl">
           About <span className="text-brand">Us</span>
         </h2>
 
-        <PixelRule className="mt-4 text-base sm:text-lg md:mt-6 md:text-2xl" />
+        <PixelRule className="mt-4 text-base md:mt-6 md:text-2xl" />
 
-        <p className="mt-6 max-w-2xl font-mono text-xs leading-relaxed text-white/80 sm:text-sm md:text-base">
+        <p className="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-white/80 md:text-base">
           Fintech Club is the student body at IIT (ISM) Dhanbad working at the
           point where finance stops being theory and starts being software. We
           read markets, write code, and argue about both.
         </p>
 
-        <p className="mt-4 max-w-2xl font-mono text-xs leading-relaxed text-white/60 sm:text-sm">
+        <p className="mt-4 max-w-2xl font-mono text-xs leading-relaxed text-white/60 md:text-sm">
           No prior background is assumed. Curiosity is the only prerequisite.
         </p>
 
-        {/* No framed cards here: the two divisions read as plain columns, so
-            the only boxes on the site stay the member portraits. */}
-        <ul className="mt-14 grid w-full max-w-3xl gap-10 text-center md:grid-cols-2 md:gap-16">
-          {pillars.map((pillar) => (
-            <li key={pillar.title}>
-              <h3 className="font-pixel text-base text-brand md:text-lg">
-                {pillar.title}
-              </h3>
-              <PixelRule length={7} className="mt-2 text-sm text-white/40" />
-              <p className="mt-3 font-mono text-xs leading-relaxed text-white/70">
-                {pillar.body}
-              </p>
-            </li>
-          ))}
-        </ul>
-
         <Link
           to="/members"
-          className="mt-14 font-mono text-xs text-brand underline-offset-8 transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:text-sm"
+          className="mt-8 font-mono text-xs text-brand md:mt-10 md:text-sm underline-offset-8 transition-colors hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
           Meet the members →
         </Link>
       </div>
+
+      <ul className="flex w-full flex-col">
+        {divisions.map((division, i) => (
+          <li
+            key={division.title}
+            className="mx-auto flex min-h-svh w-full max-w-5xl items-center px-6 py-24 md:px-10"
+          >
+            <DivisionPanel index={i + 1} {...division} />
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

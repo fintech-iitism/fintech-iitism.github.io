@@ -4,10 +4,12 @@ import { NavLink, useLocation } from 'react-router'
 interface NavItem {
   label: string
   to: string
+  /** Id of a section on the home page, scrolled to instead of routed to. */
+  sectionId?: string
 }
 
 const items: NavItem[] = [
-  { label: 'About Us', to: '/about' },
+  { label: 'Members', to: '/members' },
   { label: 'Blog', to: '/blog' },
   { label: 'Resources', to: '/resources' },
   { label: 'Events', to: '/events' },
@@ -17,6 +19,48 @@ const linkClass = ({ isActive }: { isActive: boolean }): string =>
   `transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
     isActive ? 'text-brand' : ''
   }`
+
+interface NavItemLinkProps {
+  item: NavItem
+  tabIndex?: number
+  onNavigate?: () => void
+}
+
+function NavItemLink({ item, tabIndex, onNavigate }: NavItemLinkProps) {
+  const { pathname } = useLocation()
+
+  const { sectionId } = item
+
+  if (sectionId) {
+    const onHome = pathname === '/'
+    return (
+      <a
+        href={item.to}
+        tabIndex={tabIndex}
+        className={linkClass({ isActive: false })}
+        onClick={(e) => {
+          // On the home page this is a scroll, not a navigation. Elsewhere the
+          // plain href takes the user home and the browser handles the anchor.
+          if (!onHome) return
+          e.preventDefault()
+          document
+            .getElementById(sectionId)
+            ?.scrollIntoView({ behavior: 'smooth' })
+          window.history.replaceState(null, '', `#${sectionId}`)
+          onNavigate?.()
+        }}
+      >
+        {item.label}
+      </a>
+    )
+  }
+
+  return (
+    <NavLink to={item.to} tabIndex={tabIndex} className={linkClass}>
+      {item.label}
+    </NavLink>
+  )
+}
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
@@ -55,9 +99,7 @@ export function Navbar() {
         <ul className="hidden items-center font-mono text-white md:flex md:gap-10 md:text-base lg:gap-16">
           {items.map((item) => (
             <li key={item.to}>
-              <NavLink to={item.to} className={linkClass}>
-                {item.label}
-              </NavLink>
+              <NavItemLink item={item} />
             </li>
           ))}
         </ul>
@@ -99,13 +141,11 @@ export function Navbar() {
           <ul className="mt-4 flex flex-col gap-4 border-t border-white/10 pt-4">
             {items.map((item) => (
               <li key={item.to}>
-                <NavLink
-                  to={item.to}
+                <NavItemLink
+                  item={item}
                   tabIndex={open ? 0 : -1}
-                  className={linkClass}
-                >
-                  {item.label}
-                </NavLink>
+                  onNavigate={() => setOpen(false)}
+                />
               </li>
             ))}
           </ul>

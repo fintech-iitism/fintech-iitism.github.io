@@ -1,37 +1,168 @@
 [
   {
-    "name": "A. Sharma",
-    "designation": "President",
-    "photo": "/members/rj.png"
+    "name": "Hruday Chilukuri",
+    "admission": "24JE0273",
+    "batch": 2028,
+    "branch": "Mechanical Engineering",
+    "email": "hruday.chilukuri@gmail.com",
+    "github": "https://github.com/hrudaych1099",
+    "linkedin": "https://www.linkedin.com/in/hrudaychilukuri/",
+    "photo": "drive:1IhdqzU3gHKJpv10hncCLJ7cC6lhUVX34"
   },
   {
-    "name": "B. Verma",
-    "designation": "Vice President",
-    "photo": "drive:1KCvIhR8yE3Ty2I0ZnTnTr7fsil5PCXU2"
+    "name": "Nikhil Aggarwal",
+    "admission": "24JE0953",
+    "batch": 2028,
+    "branch": "Mineral and Metallurgical Engineering",
+    "email": "nikhil181220@gmail.com"
   },
   {
-    "name": "C. Nair",
-    "designation": "Head, Finance",
+    "name": "Harshit Dubey",
+    "admission": "24JE0734",
+    "batch": 2028,
+    "branch": "Engineering Physics",
+    "email": "dubeyharshit1807@gmail.com",
+    "photo": "drive:1qkHTly8XeoAHD2QC0yv1chdTx4PsdRIN"
+  },
+  {
+    "name": "Rahul Joshi",
+    "admission": "24JE0678",
+    "batch": 2028,
+    "branch": "CSE",
+    "role": "Developer",
+    "email": "crypticsaiyan@proton.me",
+    "github": "https://github.com/crypticsaiyan",
+    "linkedin": "https://www.linkedin.com/in/rahuljoshidev",
+    "photo": "drive:1lkR_mAa7iJ0G8XYtEXX-GxmkmZTc6d9T"
+  },
+  {
+    "name": "Pushkar Kumar",
+    "admission": "24JE1036",
+    "batch": 2028,
+    "branch": "Petroleum Engineering",
+    "email": "24je1036@iitism.ac.in",
     "photo": "drive:12tAuPkN-c-kJBiEQKqPWhdX3IBX2PP82"
   },
   {
-    "name": "D. Iyer",
-    "designation": "Head, Quant"
+    "name": "Raghu Lakhotia",
+    "admission": "24JE0433",
+    "batch": 2028,
+    "branch": "Mining Engineering"
   },
   {
-    "name": "E. Khan",
-    "designation": "Head, Design"
+    "name": "Lakshay Kumar",
+    "admission": "24JE0555",
+    "batch": 2028,
+    "branch": "Chemical Engineering",
+    "email": "24je0555@iitism.ac.in",
+    "github": "https://github.com/xLakshay1",
+    "linkedin": "https://www.linkedin.com/in/lakshay-kumar-8b73a1268/",
+    "photo": "drive:1k7kXiov_-3FmW5zitwC3L1kPbVbvX6-B"
   },
   {
-    "name": "F. Das",
-    "designation": "Head, Outreach"
+    "name": "Piyush Kumar",
+    "admission": "24JE1033",
+    "batch": 2028,
+    "branch": "Petroleum Engineering",
+    "email": "24je1033@iitism.ac.in",
+    "github": "https://github.com/piyushkr0",
+    "linkedin": "https://www.linkedin.com/in/piyush-kumar-1b7653320/",
+    "photo": "drive:1i_Ac-MjBErARGS-AEFAIuN6l3IGUx3cp"
   },
   {
-    "name": "G. Rao",
-    "designation": "Treasurer"
+    "name": "Raj Priyadarshi",
+    "admission": "24JE0679",
+    "batch": 2028,
+    "branch": "CSE",
+    "email": "sanraj0576@gmail.com",
+    "github": "https://github.com/hawk-wild",
+    "linkedin": "https://www.linkedin.com/in/raj-priyadarshi",
+    "photo": "drive:1YkGQw8jKYjNI9Vulwx8nknjEiGdW0W98"
   },
   {
-    "name": "H. Singh",
-    "designation": "Secretary"
+    "name": "Apurva Arya",
+    "admission": "24JE0593",
+    "batch": 2028,
+    "branch": "CSE",
+    "email": "golu03299@gmail.com",
+    "photo": "drive:1KCvIhR8yE3Ty2I0ZnTnTr7fsil5PCXU2"
+  },
+  {
+    "name": "Gupta Rahul Kartaram",
+    "admission": "24JE0403",
+    "batch": 2028,
+    "branch": "Mining Engineering",
+    "email": "24je0403@iitism.ac.in",
+    "github": "https://github.com/RahulGupta2116",
+    "linkedin": "https://www.linkedin.com/in/rahul-gupta-583297311/",
+    "photo": "drive:1tF2bIndAWqmT1qfoOA90eZmXHUzoWPM4"
+  },
+  {
+    "name": "Aagam Jain",
+    "admission": "24JE0755",
+    "batch": 2028,
+    "branch": "ECE",
+    "email": "24je0755@iitism.ac.in",
+    "github": "https://github.com/aagamjn13",
+    "linkedin": "https://www.linkedin.com/in/aagam-jain-10226831a/"
+  },
+  {
+    "name": "Nidhi Mithiya",
+    "admission": "24JE0664",
+    "batch": 2028,
+    "branch": "CSE",
+    "email": "24je0664@iitism.ac.in"
+  },
+  {
+    "name": "Anupama Prabhala",
+    "admission": "24JE0153",
+    "batch": 2028,
+    "branch": "Electrical Engineering",
+    "email": "24je0153@iitism.ac.in"
+  },
+  {
+    "name": "Bhavesh Jat",
+    "admission": "24JE0096",
+    "batch": 2028,
+    "branch": "Electrical Engineering",
+    "email": "24je0096@iitism.ac.in",
+    "github": "https://github.com/Bhavesh-hub643",
+    "linkedin": "https://www.linkedin.com/in/bhavesh-jat-b68360276/"
+  },
+  {
+    "name": "Dhruv Bohra",
+    "admission": "24JE0397",
+    "batch": 2028,
+    "branch": "Mining Engineering",
+    "email": "24je0397@iitism.ac.in",
+    "github": "https://github.com/dhruvbohra173",
+    "linkedin": "https://www.linkedin.com/in/dhruv-bohra-a9810b320"
+  },
+  {
+    "name": "Shubhomoy Dey",
+    "admission": "24JE0696",
+    "batch": 2028,
+    "branch": "CSE",
+    "email": "24je0696@iitism.ac.in",
+    "github": "https://github.com/shubho365",
+    "linkedin": "https://www.linkedin.com/in/shubhomoy-dey-817934321/",
+    "photo": "drive:1wGheN3DxpJ-TihjFkpzkTZbre0tZN1YY"
+  },
+  {
+    "name": "Hardik Koolwal",
+    "admission": "24JE0499",
+    "batch": 2028,
+    "branch": "MME",
+    "email": "24je0499@iitism.ac.in"
+  },
+  {
+    "name": "Aashish Kumar",
+    "admission": "24JE0758",
+    "batch": 2028,
+    "branch": "ECE",
+    "email": "24je0758@iitism.ac.in",
+    "github": "https://github.com/reck98",
+    "linkedin": "https://www.linkedin.com/in/aashish1r",
+    "photo": "drive:1XczDO1cRMFU5Dcd_RKwUg8ZOvHfujaZS"
   }
 ]

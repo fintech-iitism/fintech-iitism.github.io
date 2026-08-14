@@ -36,15 +36,15 @@ export function Footer() {
             alt="Fintech Club, IIT (ISM) Dhanbad"
             className="h-9 w-auto brightness-200"
           />
-          <p className="mt-4 font-mono text-xs leading-relaxed text-white/60">
+          <p className="mt-4 font-mono text-xs leading-relaxed text-white/60 md:text-sm">
             The official finance and technology club of IIT (ISM) Dhanbad.
           </p>
         </div>
 
         <nav className="flex gap-12 md:gap-20">
           <div>
-            <h2 className="font-pixel text-sm text-white">Site</h2>
-            <ul className="mt-4 flex flex-col gap-2 font-mono text-xs text-white/60">
+            <h2 className="font-pixel text-sm text-white md:text-base">Site</h2>
+            <ul className="mt-4 flex flex-col gap-2 font-mono text-xs text-white/60 md:text-sm">
               {siteLinks.map((link) => (
                 <li key={link.to}>
                   <Link
@@ -59,8 +59,8 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="font-pixel text-sm text-white">Elsewhere</h2>
-            <ul className="mt-4 flex flex-col gap-2 font-mono text-xs text-white/60">
+            <h2 className="font-pixel text-sm text-white md:text-base">Elsewhere</h2>
+            <ul className="mt-4 flex flex-col gap-2 font-mono text-xs text-white/60 md:text-sm">
               {socialLinks.map((link) => (
                 <li key={link.label}>
                   <a
@@ -78,7 +78,7 @@ export function Footer() {
         </nav>
       </div>
 
-      <div className="mt-10 flex flex-col gap-2 border-t border-white/5 pt-6 font-mono text-[0.7rem] text-white/40 sm:flex-row sm:justify-between">
+      <div className="mt-10 flex flex-col gap-2 border-t border-white/5 pt-6 font-mono text-xs text-white/40 sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} Fintech Club, IIT (ISM) Dhanbad.</p>
         <p>Built by the club, in Dhanbad.</p>
       </div>

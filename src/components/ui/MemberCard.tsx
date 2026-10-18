@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence } from 'motion/react'
 import type { Member } from '../../data/members'
-import { divisionTint } from '../../data/divisions'
 import { useCoarsePointer } from '../../hooks/useCoarsePointer'
 import { AsciiHoverImage } from './AsciiHoverImage'
 import { Frame } from './Frame'
@@ -26,7 +25,7 @@ const PLACEHOLDER = '/member-placeholder.png'
  * anchor cannot be nested inside another.
  */
 export function MemberCard(member: Member) {
-  const { name, branch, division, role, image } = member
+  const { name, branch, role, image } = member
   const coarse = useCoarsePointer()
   const [open, setOpen] = useState(false)
 
@@ -87,15 +86,7 @@ export function MemberCard(member: Member) {
             cards whose names and branches wrap to different heights. Kept
             outside the button: these are links in their own right, and a tap
             meant for one of them must not open the dialog instead. */}
-        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
-          {division ? (
-            <span
-              className={`border px-1.5 py-0.5 font-mono text-2xs tracking-[0.15em] ${divisionTint[division]}`}
-            >
-              {division.toUpperCase()}
-            </span>
-          ) : null}
-
+        <div className="mt-auto flex flex-wrap items-center gap-2 pt-3">
           <MemberContacts {...member} />
         </div>
       </article>

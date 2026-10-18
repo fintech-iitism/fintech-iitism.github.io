@@ -97,6 +97,10 @@ export function AsciiHoverImage({
     // style, so photos of any aspect ratio can be dropped in unprepared.
     let crop = { x: 0, y: 0, w: 0, h: 0 }
     let cells: Cell[] = []
+    // Cells flickered since the last idle paint.
+    const dirty: Cell[] = []
+    // Set by every animated frame, so the next idle paint redraws in full.
+    let stale = true
     let assembled = still ? 1 : 0 // load progress of the ASCII
     let reveal = 0 // spotlight strength
     let revealTarget = 0
@@ -110,6 +114,8 @@ export function AsciiHoverImage({
     // already run. Without this the orphaned loop keeps ticking and its swaps
     // stack on top of the live one.
     let dead = false
+    let visible = false
+    let requested = false
 
     const draw = () => {
       const w = wrap.clientWidth
@@ -176,6 +182,22 @@ export function AsciiHoverImage({
       ctx.drawImage(plate, 0, 0, w, h)
     }
 
+    // Idle repaint: only the cells whose character flickered since the last
+    // paint, each cleared and redrawn in place. Every cell has landed by now, so
+    // its alpha is its own. A full redraw would set every glyph on the card to
+    // change roughly one in eight of them.
+    const drawDirty = () => {
+      ctx.font = `500 ${cellSize}px "JetBrains Mono", monospace`
+      ctx.textBaseline = 'top'
+      for (const cell of dirty) {
+        ctx.clearRect(cell.x, cell.y, cw, ch)
+        ctx.globalAlpha = cell.alpha
+        ctx.fillStyle = cell.color
+        ctx.fillText(cell.ch, cell.x, cell.y)
+      }
+      ctx.globalAlpha = 1
+    }
+
     const tick = (t: number) => {
       const dt = Math.min(0.05, (t - lastT) / 1000)
       lastT = t
@@ -196,19 +218,32 @@ export function AsciiHoverImage({
         if (local > 0 && local < 1) cell.ch = pick(cell.set)
       }
 
+      // Full rate while anything is animating, throttled when only flickering.
+      const busy = assembled < 1 || reveal !== revealTarget || revealTarget > 0
+
       const swaps = Math.round(cells.length * flicker * dt * assembled)
       for (let n = 0; n < swaps; n++) {
         const cell = cells[(Math.random() * cells.length) | 0]!
         cell.ch = pick(cell.set)
+        if (!busy) dirty.push(cell)
       }
 
-      // Full rate while anything is animating, throttled when only flickering.
-      const busy = assembled < 1 || reveal !== revealTarget || revealTarget > 0
-      if (busy || t - painted > 1000 / IDLE_FPS) {
+      if (busy) {
         painted = t
         draw()
+        stale = true
+      } else if (t - painted > 1000 / IDLE_FPS) {
+        painted = t
+        // The first idle paint after any animation is a full one, to clear what
+        // the last animated frame left (a fading photo, half-landed glyphs).
+        // After that only the flickered cells change.
+        if (stale) draw()
+        else drawDirty()
+        stale = false
+        dirty.length = 0
       }
-      frame = requestAnimationFrame(tick)
+      // Off screen the loop parks itself; the observer below restarts it.
+      frame = visible ? requestAnimationFrame(tick) : 0
     }
 
     const build = () => {
@@ -252,6 +287,7 @@ export function AsciiHoverImage({
       const oy = ay >= 0 ? 0 : h
 
       cells = []
+      dirty.length = 0
       for (let i = 0; i < cols * rows; i++) {
         const p = i * 4
         const alpha = data[p + 3]! / 255
@@ -296,19 +332,41 @@ export function AsciiHoverImage({
       },
     }
 
-    const img = new Image()
-    img.src = src
-    img.decode().then(
-      () => {
-        if (dead) return
-        image = img
-        build()
-        holdUntil = performance.now() + introDelay * 1000
-        lastT = performance.now()
-        frame = requestAnimationFrame(tick)
+    const start = () => {
+      if (dead || !image || frame) return
+      lastT = performance.now()
+      frame = requestAnimationFrame(tick)
+    }
+
+    const load = () => {
+      requested = true
+      const img = new Image()
+      img.src = src
+      img.decode().then(
+        () => {
+          if (dead) return
+          image = img
+          build()
+          holdUntil = performance.now() + introDelay * 1000
+          if (visible) start()
+        },
+        () => undefined,
+      )
+    }
+
+    // Nothing is fetched or animated until the image nears the viewport. The
+    // members page holds dozens of these, and each loop redraws a few thousand
+    // glyphs: left running they all compete for every frame, seen or not.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry?.isIntersecting ?? false
+        if (!visible) return
+        if (!requested) load()
+        start()
       },
-      () => undefined,
+      { rootMargin: '200px' },
     )
+    io.observe(wrap)
 
     const observer = new ResizeObserver(build)
     observer.observe(wrap)
@@ -316,6 +374,7 @@ export function AsciiHoverImage({
     return () => {
       dead = true
       cancelAnimationFrame(frame)
+      io.disconnect()
       observer.disconnect()
     }
   }, [
@@ -350,7 +409,14 @@ export function AsciiHoverImage({
           would otherwise show for the frames the decode takes. `visibility`
           rather than `display` or `hidden`, because callers that set no aspect
           ratio still take their height from this element. */}
-      <img ref={imgRef} src={src} alt={alt} className="invisible block w-full" />
+      <img
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="invisible block w-full"
+      />
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full" />
     </div>
   )

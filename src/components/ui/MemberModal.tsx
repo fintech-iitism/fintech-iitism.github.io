@@ -1,7 +1,6 @@
 import { createPortal } from 'react-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import type { Member } from '../../data/members'
-import { divisionTint } from '../../data/divisions'
 import { useDialog } from '../../hooks/useDialog'
 import { Frame } from './Frame'
 import { MemberContacts } from './MemberContacts'
@@ -27,7 +26,7 @@ interface MemberModalProps {
 export function MemberModal({ member, onClose }: MemberModalProps) {
   const still = useReducedMotion()
   const panel = useDialog(onClose)
-  const { name, branch, role, division, image } = member
+  const { name, branch, role, image } = member
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -81,15 +80,7 @@ export function MemberModal({ member, onClose }: MemberModalProps) {
 
           <p className="mt-3 font-mono text-sm text-white/60">{branch}</p>
 
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-            {division ? (
-              <span
-                className={`border px-1.5 py-0.5 font-mono text-2xs tracking-[0.15em] ${divisionTint[division]}`}
-              >
-                {division.toUpperCase()}
-              </span>
-            ) : null}
-
+          <div className="mt-5 flex flex-wrap items-center gap-3">
             <MemberContacts {...member} size="h-5 w-5" />
           </div>
         </Frame>

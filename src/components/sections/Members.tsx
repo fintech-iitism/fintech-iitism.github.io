@@ -21,7 +21,10 @@ export function Members() {
         {batches.map((batch) => (
           <div key={batch.year} className="mt-16 w-full md:mt-20">
             <h2 className="font-pixel text-xl text-white">
-              Batch of <span className="text-brand">{batch.year}</span>
+              Batch of{' '}
+              <span className="text-brand">
+                {batch.year}-{String((batch.year + 1) % 100).padStart(2, '0')}
+              </span>
             </h2>
 
             <ul className="mt-8 grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">

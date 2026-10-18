@@ -1,9 +1,78 @@
 [
   {
+    "name": "Ritik Agarwal",
+    "admission": "23JE0817",
+    "batch": 2027,
+    "branch": "CHE",
+    "division": "Quant",
+    "email": "23je0817@iitism.ac.in",
+    "github": "https://github.com/Ritik3115",
+    "linkedin": "https://www.linkedin.com/in/ritik-agarwal-53b2b7288",
+    "photo": "drive:1q0PxQaBx53cCCgU7-mabK0BrMvc_iKrH"
+  },
+  {
+    "name": "Ujjwal Lal",
+    "admission": "23JE1044",
+    "batch": 2027,
+    "branch": "MNC",
+    "email": "23je1044@iitism.ac.in",
+    "photo": "drive:1fJs_93vgNRVKs7bFu0crW7MUc9cAVyx4"
+  },
+  {
+    "name": "Adhayayan Kushagra Shandilya",
+    "admission": "23JE0037",
+    "batch": 2027,
+    "branch": "PE",
+    "email": "23je0037@iitism.ac.in"
+  },
+  {
+    "name": "Jasminee Behera",
+    "admission": "23JE0425",
+    "batch": 2027,
+    "branch": "CHE",
+    "email": "23je0425@iitism.ac.in"
+  },
+  {
+    "name": "Pranav Nagaram",
+    "admission": "23JE0623",
+    "batch": 2027,
+    "branch": "CSE",
+    "email": "23je0623@iitism.ac.in"
+  },
+  {
+    "name": "Sanatan Bagaria",
+    "admission": "23JE0863",
+    "batch": 2027,
+    "branch": "EE",
+    "email": "23je0863@iitism.ac.in"
+  },
+  {
+    "name": "Nitin Shekhar",
+    "admission": "23JE0660",
+    "batch": 2027,
+    "branch": "ME",
+    "email": "23je0660@iitism.ac.in"
+  },
+  {
+    "name": "Dhruv Agrawal",
+    "admission": "23JE0060",
+    "batch": 2027,
+    "branch": "CSE",
+    "email": "23je0060@iitism.ac.in"
+  },
+  {
+    "name": "Pradeepta Ranjan Mohanty",
+    "admission": "23JE0726",
+    "batch": 2027,
+    "branch": "CE",
+    "email": "23je0726@iitism.ac.in"
+  },
+  {
     "name": "Hruday Chilukuri",
     "admission": "24JE0273",
     "batch": 2028,
     "branch": "ME",
+    "role": "Coordinator",
     "email": "hruday.chilukuri@gmail.com",
     "github": "https://github.com/hrudaych1099",
     "linkedin": "https://www.linkedin.com/in/hrudaychilukuri/",
@@ -14,14 +83,21 @@
     "admission": "24JE0953",
     "batch": 2028,
     "branch": "MME",
-    "email": "nikhil181220@gmail.com"
+    "role": "Outreach",
+    "email": "nikhil181220@gmail.com",
+    "github": "https://github.com/NikhilAggarwal18",
+    "linkedin": "https://www.linkedin.com/in/nikhil-aggarwal-00744a320",
+    "photo": "drive:1TmeyJsl0LykYcT0_IE2w3qE90s4oXFNP"
   },
   {
     "name": "Harshit Dubey",
     "admission": "24JE0734",
     "batch": 2028,
     "branch": "EP",
+    "role": "Outreach",
     "email": "dubeyharshit1807@gmail.com",
+    "github": "https://github.com/Harshit18406",
+    "linkedin": "https://www.linkedin.com/in/harshit-dubey-958603320/",
     "photo": "drive:1qkHTly8XeoAHD2QC0yv1chdTx4PsdRIN"
   },
   {
@@ -29,6 +105,7 @@
     "admission": "24JE0678",
     "batch": 2028,
     "branch": "CSE",
+    "division": "Quant",
     "role": "Developer",
     "email": "crypticsaiyan@proton.me",
     "github": "https://github.com/crypticsaiyan",
@@ -36,44 +113,32 @@
     "photo": "drive:1aqVlN-DJp5H8BhWLUNhku4Bi8pdBIZGu"
   },
   {
-    "name": "Pushkar Kumar",
-    "admission": "24JE1036",
-    "batch": 2028,
-    "branch": "PE",
-    "email": "24je1036@iitism.ac.in",
-    "photo": "drive:12tAuPkN-c-kJBiEQKqPWhdX3IBX2PP82"
-  },
-  {
     "name": "Raghu Lakhotia",
     "admission": "24JE0433",
     "batch": 2028,
-    "branch": "MIN"
+    "branch": "MIN",
+    "division": "Finance",
+    "role": "Finance Head",
+    "linkedin": "https://www.linkedin.com/in/raghulakhotia07/",
+    "photo": "drive:1RqbgvXdT0F7xoWArfgp68YCkxsyw2jis"
   },
   {
     "name": "Lakshay Kumar",
     "admission": "24JE0555",
     "batch": 2028,
     "branch": "CHE",
+    "role": "Quant Head",
     "email": "24je0555@iitism.ac.in",
     "github": "https://github.com/xLakshay1",
     "linkedin": "https://www.linkedin.com/in/lakshay-kumar-8b73a1268/",
     "photo": "drive:1k7kXiov_-3FmW5zitwC3L1kPbVbvX6-B"
   },
   {
-    "name": "Piyush Kumar",
-    "admission": "24JE1033",
-    "batch": 2028,
-    "branch": "PE",
-    "email": "24je1033@iitism.ac.in",
-    "github": "https://github.com/piyushkr0",
-    "linkedin": "https://www.linkedin.com/in/piyush-kumar-1b7653320/",
-    "photo": "drive:1i_Ac-MjBErARGS-AEFAIuN6l3IGUx3cp"
-  },
-  {
     "name": "Raj Priyadarshi",
     "admission": "24JE0679",
     "batch": 2028,
     "branch": "CSE",
+    "role": "Developer",
     "email": "sanraj0576@gmail.com",
     "github": "https://github.com/hawk-wild",
     "linkedin": "https://www.linkedin.com/in/raj-priyadarshi",
@@ -85,6 +150,8 @@
     "batch": 2028,
     "branch": "CSE",
     "email": "golu03299@gmail.com",
+    "github": "https://github.com/immortal-tree",
+    "linkedin": "https://www.linkedin.com/in/apurva-arya-1b9920320/",
     "photo": "drive:1KCvIhR8yE3Ty2I0ZnTnTr7fsil5PCXU2"
   },
   {
@@ -92,6 +159,7 @@
     "admission": "24JE0403",
     "batch": 2028,
     "branch": "MIN",
+    "role": "Co-coordinator",
     "email": "24je0403@iitism.ac.in",
     "github": "https://github.com/RahulGupta2116",
     "linkedin": "https://www.linkedin.com/in/rahul-gupta-583297311/",
@@ -104,39 +172,30 @@
     "branch": "ECE",
     "email": "24je0755@iitism.ac.in",
     "github": "https://github.com/aagamjn13",
-    "linkedin": "https://www.linkedin.com/in/aagam-jain-10226831a/"
+    "linkedin": "https://www.linkedin.com/in/aagam-jain-10226831a/",
+    "photo": "drive:1h2d8fxEOATK93y4fG4iuQ1G0a4eyQorC"
   },
   {
     "name": "Nidhi Mithiya",
     "admission": "24JE0664",
     "batch": 2028,
     "branch": "CSE",
-    "email": "24je0664@iitism.ac.in"
+    "division": "Quant",
+    "role": "Developer",
+    "email": "24je0664@iitism.ac.in",
+    "github": "https://github.com/1-34-5",
+    "linkedin": "https://www.linkedin.com/in/nidhi-mithiya11"
   },
   {
     "name": "Anupama Prabhala",
     "admission": "24JE0153",
     "batch": 2028,
     "branch": "EE",
-    "email": "24je0153@iitism.ac.in"
-  },
-  {
-    "name": "Bhavesh Jat",
-    "admission": "24JE0096",
-    "batch": 2028,
-    "branch": "EE",
-    "email": "24je0096@iitism.ac.in",
-    "github": "https://github.com/Bhavesh-hub643",
-    "linkedin": "https://www.linkedin.com/in/bhavesh-jat-b68360276/"
-  },
-  {
-    "name": "Dhruv Bohra",
-    "admission": "24JE0397",
-    "batch": 2028,
-    "branch": "MIN",
-    "email": "24je0397@iitism.ac.in",
-    "github": "https://github.com/dhruvbohra173",
-    "linkedin": "https://www.linkedin.com/in/dhruv-bohra-a9810b320"
+    "role": "Outreach",
+    "email": "24je0153@iitism.ac.in",
+    "github": "https://github.com/anupama146",
+    "linkedin": "https://www.linkedin.com/in/syama-anupama-prabhala1406/",
+    "photo": "drive:1TDRuoilTXZBeWQ_hQManYuJnAu_YqMuo"
   },
   {
     "name": "Shubhomoy Dey",
@@ -164,5 +223,246 @@
     "github": "https://github.com/reck98",
     "linkedin": "https://www.linkedin.com/in/aashish1r",
     "photo": "drive:1XczDO1cRMFU5Dcd_RKwUg8ZOvHfujaZS"
+  },
+  {
+    "name": "Siddhanth Jain",
+    "admission": "24JE0966",
+    "batch": 2028,
+    "branch": "MME",
+    "email": "24je0966@iitism.ac.in",
+    "github": "https://github.com/SiddhanthJain5",
+    "linkedin": "https://www.linkedin.com/in/siddhanth-jain-758024273/"
+  },
+  {
+    "name": "Ashutosh Kumar",
+    "admission": "25JE0784",
+    "batch": 2029,
+    "branch": "EP",
+    "division": "Quant",
+    "email": "25je0784@iitism.ac.in",
+    "github": "https://github.com/honky1080",
+    "linkedin": "https://www.linkedin.com/in/ashutosh-kumar-a05089358",
+    "photo": "drive:15OQG5mSUDp4l8NKwuCzQueSd91Ldme55"
+  },
+  {
+    "name": "Ayan Ghosh",
+    "admission": "25JE1128",
+    "batch": 2029,
+    "branch": "MNC",
+    "division": "Quant",
+    "email": "25je1128@iitism.ac.in",
+    "github": "https://github.com/ayankg07-cloud",
+    "linkedin": "https://www.linkedin.com/in/ayan-ghosh-13a69326a",
+    "photo": "drive:159QI_dbXRbweDi0aKTwTo5p6thuVrDNz"
+  },
+  {
+    "name": "Arnav Anand Tiwari",
+    "admission": "25JE1126",
+    "batch": 2029,
+    "branch": "MNC",
+    "division": "Quant",
+    "email": "25je1126@iitism.ac.in",
+    "github": "https://github.com/encryptedcode29-iit",
+    "linkedin": "https://www.linkedin.com/in/arnav-anand-tiwari/",
+    "photo": "drive:1lTVkvkeDovaClT9Je-uS2eyF4j3_vvuQ"
+  },
+  {
+    "name": "Chitti Shreyas",
+    "admission": "25JE0030",
+    "batch": 2029,
+    "branch": "EE",
+    "division": "Finance",
+    "email": "25je0030@iitism.ac.in",
+    "github": "https://github.com/shreyaschitti404",
+    "linkedin": "https://www.linkedin.com/in/shreyas-chitti-363677347",
+    "photo": "drive:1D-ISzQv80WNXHIm9t2-zPk3n5iyJ3ZR9"
+  },
+  {
+    "name": "Krish Shah",
+    "admission": "25JE0369",
+    "batch": 2029,
+    "branch": "ME",
+    "division": "Quant",
+    "email": "25je0369@iitism.ac.in",
+    "github": "https://github.com/25je0369",
+    "linkedin": "https://www.linkedin.com/in/krish-shah-025499378/"
+  },
+  {
+    "name": "Prakhar Agrawal",
+    "admission": "25JE0392",
+    "batch": 2029,
+    "branch": "ME",
+    "division": "Quant",
+    "email": "25je0392@iitism.ac.in",
+    "github": "https://github.com/prakhar720",
+    "linkedin": "https://www.linkedin.com/in/prakhar-agrawal-4218aa254",
+    "photo": "drive:1yyAKWFteGgGM1udYEmJNMT4v_F4dOWiq"
+  },
+  {
+    "name": "Raj Hamdan",
+    "admission": "25JE1207",
+    "batch": 2029,
+    "branch": "AGL",
+    "division": "Finance",
+    "email": "25je1207@iitism.ac.in",
+    "github": "https://github.com/rajhamdan54-art",
+    "linkedin": "https://www.linkedin.com/in/raj-hamdan-16353626b",
+    "photo": "drive:1c6Drm_GfIjhzqEKoDjSO1VXmsu1paQiy"
+  },
+  {
+    "name": "Likith U",
+    "admission": "25JE0278",
+    "batch": 2029,
+    "branch": "ENV",
+    "division": "Finance",
+    "email": "25je0278@iitism.ac.in",
+    "github": "https://github.com/likith-u",
+    "linkedin": "https://www.linkedin.com/in/likith-u-275171377",
+    "photo": "drive:1Vociq61t0gQ1fLUNKHgyscol69WXODRL"
+  },
+  {
+    "name": "Dev Shah",
+    "admission": "25JE0885",
+    "batch": 2029,
+    "branch": "CSE",
+    "division": "Quant",
+    "email": "25je0885@iitism.ac.in",
+    "github": "https://github.com/harrypotter462",
+    "linkedin": "https://www.linkedin.com/in/dev-shah-b21172392/",
+    "photo": "drive:1jVHhEjKaJ9-2-RcIAr-O-tKZxVibb0o6"
+  },
+  {
+    "name": "Adarsh Kumar",
+    "admission": "25JE0302",
+    "batch": 2029,
+    "branch": "ME",
+    "division": "Quant",
+    "email": "25je0302@iitism.ac.in",
+    "github": "https://github.com/adarshk2404",
+    "linkedin": "https://www.linkedin.com/in/adarsh-kumar-83065436b/"
+  },
+  {
+    "name": "Shresth Porwal",
+    "admission": "25JE1099",
+    "batch": 2029,
+    "branch": "ECE",
+    "division": "Quant",
+    "email": "25je1099@iitism.ac.in",
+    "github": "https://github.com/porwalshresth",
+    "linkedin": "https://www.linkedin.com/in/shresth-porwal-999238371",
+    "photo": "drive:1QUtGvXFtlwBKdTqIC7It4QvaGIH7gcty"
+  },
+  {
+    "name": "Airell Sequeira",
+    "admission": "25JE0308",
+    "batch": 2029,
+    "branch": "ME",
+    "division": "Finance",
+    "email": "25je0308@iitism.ac.in",
+    "github": "https://github.com/Airell-Sequeira",
+    "linkedin": "https://www.linkedin.com/in/airell-sequeira-73a966256",
+    "photo": "drive:1vAKnWhrWhxproAPmAaMLuCIIwc-FfIgo"
+  },
+  {
+    "name": "Satyaroop Chattopadhyay",
+    "admission": "25JE0102",
+    "batch": 2029,
+    "branch": "EE",
+    "division": "Quant",
+    "email": "25je0102@iitism.ac.in",
+    "github": "https://github.com/CodeitupwithSatya",
+    "linkedin": "https://www.linkedin.com/in/satyaroop-chattopadhyay-ba6388377/",
+    "photo": "drive:1Zs6Ng1C_aDFoi8wPSZ5wWkGRqXNFok0z"
+  },
+  {
+    "name": "Avi Jain",
+    "admission": "25JE1127",
+    "batch": 2029,
+    "branch": "MNC",
+    "division": "Quant",
+    "email": "25je1127@iitism.ac.in",
+    "github": "https://github.com/EnKruptos",
+    "linkedin": "https://www.linkedin.com/in/avijain-enkruptos/",
+    "photo": "drive:1HeJJIBoM42KR0PsXuf1RRonlXtU_XopB"
+  },
+  {
+    "name": "Sonu Kumar",
+    "admission": "25JE0973",
+    "batch": 2029,
+    "branch": "CSE",
+    "division": "Quant",
+    "email": "25je0973@iitism.ac.in",
+    "github": "https://github.com/alphacse-sonu",
+    "linkedin": "https://www.linkedin.com/in/sonu-kumar-707282377"
+  },
+  {
+    "name": "Satyam Kumar",
+    "admission": "25JE0729",
+    "batch": 2029,
+    "branch": "PE",
+    "division": "Finance",
+    "email": "25je0729@iitism.ac.in",
+    "linkedin": "https://www.linkedin.com/in/satyam-kumar-b156a8370"
+  },
+  {
+    "name": "Ayan Pal",
+    "admission": "25JE0327",
+    "batch": 2029,
+    "branch": "ME",
+    "division": "Quant",
+    "email": "25je0327@iitism.ac.in",
+    "github": "https://github.com/ayanpalgit",
+    "linkedin": "https://www.linkedin.com/in/ayan-pal-a03bba376"
+  },
+  {
+    "name": "Deepanshu Garg",
+    "admission": "25JE1136",
+    "batch": 2029,
+    "branch": "MNC",
+    "division": "Finance",
+    "email": "25je1136@iitism.ac.in",
+    "github": "https://github.com/garg248-byte",
+    "linkedin": "https://www.linkedin.com/in/gargdeepanshu248",
+    "photo": "drive:1zRSNueLoRVoE9Ihj6HwW1lPAsVX__TJ5"
+  },
+  {
+    "name": "Debmalya Kar",
+    "admission": "25JE0338",
+    "batch": 2029,
+    "branch": "ME",
+    "division": "Quant",
+    "email": "25je0338@iitism.ac.in",
+    "github": "https://github.com/DebmalyaKar27",
+    "linkedin": "https://www.linkedin.com/in/debmalyakar",
+    "photo": "drive:1C30v14n-cu-xmA3V3wCZqOVuThB5mtuX"
+  },
+  {
+    "name": "Aaryan Goklaney",
+    "admission": "25JE0547",
+    "batch": 2029,
+    "branch": "MIN-MBA",
+    "division": "Quant",
+    "email": "25je0547@iitism.ac.in",
+    "photo": "drive:1-fOtffPv_fflyLcpJgd5OaNXoJoASizP"
+  },
+  {
+    "name": "Agnibha Ganguly",
+    "admission": "25JE0609",
+    "batch": 2029,
+    "branch": "CHE",
+    "division": "Finance",
+    "email": "25je0609@iitism.ac.in",
+    "github": "https://github.com/Agnibha06",
+    "linkedin": "https://www.linkedin.com/in/agnibha-ganguly-64088636a"
+  },
+  {
+    "name": "Nehal Mehta",
+    "admission": "25JE0383",
+    "batch": 2029,
+    "branch": "ME",
+    "division": "Finance",
+    "email": "25je0383@iitism.ac.in",
+    "github": "https://github.com/nehal03-11",
+    "linkedin": "https://www.linkedin.com/in/nehal-mehta-369948376"
   }
 ]

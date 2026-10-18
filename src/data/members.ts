@@ -8,8 +8,9 @@ interface MemberEntry {
   /** Institute admission number. Doubles as the roster's unique key. */
   admission: string
   /**
-   * Graduation year, written out rather than derived from the admission
-   * number's year prefix: degree lengths differ across programmes.
+   * Batch the member is grouped under: the intake year from the admission
+   * number plus four, so a whole intake (e.g. 25JE) shares one heading even
+   * when some of it is on a five-year programme.
    */
   batch: number
   branch: string
@@ -52,7 +53,7 @@ const photoSlug = (admission: string): string => admission.toLowerCase()
 const resolvePhoto = (entry: MemberEntry): string | undefined => {
   if (!entry.photo) return undefined
   if (!entry.photo.startsWith('drive:')) return entry.photo
-  return `/members/${photoSlug(entry.admission)}.jpg`
+  return `/members/${photoSlug(entry.admission)}.webp`
 }
 
 export const members: Member[] = (roster as MemberEntry[]).map((entry) => ({
